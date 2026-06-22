@@ -429,8 +429,7 @@
 <section class="ctaSec" id="cta"><div class="wrap reveal">
   <h2>AI 교육·강연,<br>편하게 문의 주세요.</h2>
   <p>대상·인원·시간만 알려주시면, 목적에 맞는 커리큘럼을 제안드립니다. 특강부터 정규 과정, 기업 맞춤 워크숍, 국비지원 과정까지 운영 가능합니다.</p>
-  <div class="btns"><a href="https://naver.me/5WUApXGS" target="_blank" class="btn p">교육 의뢰하기</a><a href="https://naver.me/5WUApXGS" target="_blank" class="btn s">커리큘럼 상담</a></div>
-  <div id="kakao-add-channel-button" style="margin-top:18px;display:flex;justify-content:center"></div>
+  <div class="btns"><a href="https://naver.me/5WUApXGS" target="_blank" class="btn p">교육 의뢰하기</a><a href="https://naver.me/5WUApXGS" target="_blank" class="btn s">커리큘럼 상담</a><a href="https://pf.kakao.com/_ZeUTxl" target="_blank" class="btn k">💬 카카오 채널</a></div>
   <div class="ask">Email. 13minalisa@naver.com · <a href="https://blog.naver.com/jangworks" target="_blank" style="color:var(--dim);text-decoration:none;">https://blog.naver.com/jangworks</a></div>
 </div></section>
 
@@ -444,11 +443,6 @@
   const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.1});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-  Kakao.init('eb625983bd20c1fcf8dd694e36dbf78b');
-  Kakao.Channel.createAddChannelButton({
-    container: '#kakao-add-channel-button',
-    channelPublicId: '_ZeUTxl',
-  });
 </script>
 </body>
 </html>
