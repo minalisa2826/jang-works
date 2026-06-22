@@ -89,11 +89,11 @@
   .tg-basic{background:rgba(34,211,238,.15);color:var(--ai2)}
   .tg-pro{background:rgba(124,92,255,.18);color:#b9a6ff}
   .curtitle .cnt{font-size:12.5px;color:var(--dim);font-weight:500;margin-left:auto}
-  .cur{display:grid;grid-template-columns:1fr 1fr;gap:0 22px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 20px}
+  .cur{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,auto);grid-auto-flow:column;gap:0 22px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 20px}
   .cur .it{font-size:13.5px;color:var(--sub);padding:9px 0;border-bottom:1px solid var(--line);display:flex;gap:10px}
   .cur .it .num{color:var(--ai2);font-weight:700;flex-shrink:0;font-size:12.5px;min-width:20px}
   .cur .it:nth-last-child(1),.cur .it:nth-last-child(2){border-bottom:none}
-  @media(max-width:680px){.cur{grid-template-columns:1fr}.cur .it:nth-last-child(2){border-bottom:1px solid var(--line)}}
+  @media(max-width:680px){.cur{grid-template-columns:1fr;grid-template-rows:auto;grid-auto-flow:row}.cur .it:nth-last-child(2){border-bottom:1px solid var(--line)}}
 
   /* audience */
   .aud{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:36px}
@@ -236,20 +236,20 @@
   <div class="curtitle"><span class="tag tg-basic">PART 1 · 기초</span> 생성형 AI 첫걸음 <span class="cnt">6차시</span></div>
   <div class="cur">
     <div class="it"><span class="num">1</span>생성형 AI 이해 — 무엇을 맡길 수 있나</div>
-    <div class="it"><span class="num">4</span>AI 이미지 만들기 — Text-to-Image</div>
     <div class="it"><span class="num">2</span>ChatGPT·Claude 시작하기 — 도구 비교</div>
-    <div class="it"><span class="num">5</span>AI 콘텐츠 — 카드뉴스·간단 영상</div>
     <div class="it"><span class="num">3</span>통하는 대화법 — 프롬프트 기초</div>
+    <div class="it"><span class="num">4</span>AI 이미지 만들기 — Text-to-Image</div>
+    <div class="it"><span class="num">5</span>AI 콘텐츠 — 카드뉴스·간단 영상</div>
     <div class="it"><span class="num">6</span>AI 윤리·저작권·개인정보보안</div>
   </div>
 
   <div class="curtitle"><span class="tag tg-pro">PART 2 · 실무 적용</span> 업무에 바로 쓰는 AI <span class="cnt">6차시</span></div>
   <div class="cur">
     <div class="it"><span class="num">1</span>문서·보고서 자동 작성 (이메일·기안·회의록)</div>
-    <div class="it"><span class="num">4</span>업무 자동화 — 반복 작업을 AI로</div>
     <div class="it"><span class="num">2</span>데이터 정리·분석·시각화</div>
-    <div class="it"><span class="num">5</span>바이브 코딩 — 코드 없이 업무 도구 만들기</div>
     <div class="it"><span class="num">3</span>홍보·콘텐츠 자동화 (SNS·이미지·영상)</div>
+    <div class="it"><span class="num">4</span>업무 자동화 — 반복 작업을 AI로</div>
+    <div class="it"><span class="num">5</span>바이브 코딩 — 코드 없이 업무 도구 만들기</div>
     <div class="it"><span class="num">6</span>AI 에이전트 — 나만의 업무 비서 구성</div>
   </div>
   <p class="lead" style="margin-top:22px;font-size:14px;color:var(--dim)">＊ 위 과정에 더해, 바이브 코딩·AI 에이전트 구성 모듈을 조직 수준에 맞춰 심화 단계로 추가 설계할 수 있습니다.</p>
