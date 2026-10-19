@@ -152,6 +152,47 @@
   .bwnote{margin-top:16px;font-size:11.5px;color:var(--dim)}
   @media(max-width:680px){.hx{grid-template-columns:88px 1fr;gap:12px}}
 
+  /* 클릭하면 펼쳐지는 항목 (details/summary) */
+  :root{interpolate-size:allow-keywords}
+  .acc>summary{list-style:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .acc>summary::-webkit-details-marker{display:none}
+  .acc>summary:focus-visible{outline:2px solid var(--ai2);outline-offset:4px;border-radius:10px}
+  .acc::details-content{block-size:0;overflow:hidden;transition:block-size .35s cubic-bezier(.2,.7,.2,1),content-visibility .35s allow-discrete}
+  .acc[open]::details-content{block-size:auto}
+  .chev{width:28px;height:28px;border-radius:50%;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.3s;justify-self:end}
+  .chev::before{content:"";width:7px;height:7px;border-right:2px solid var(--sub);border-bottom:2px solid var(--sub);transform:translateY(-2px) rotate(45deg);transition:.3s}
+  .acc>summary:hover .chev{border-color:var(--ai2)}
+  .acc[open]>summary .chev{background:linear-gradient(135deg,var(--ai),var(--ai2));border-color:transparent}
+  .acc[open]>summary .chev::before{border-color:#fff;transform:translateY(2px) rotate(-135deg)}
+  .acc-hint{font-size:12.5px;color:var(--dim);margin-top:10px}
+  details.stage{display:block;padding:0}
+  details.stage>summary{display:grid;grid-template-columns:54px 1fr 28px;gap:18px;align-items:center;padding:18px 0}
+  details.stage>summary h4{margin:0;transition:color .2s}
+  details.stage>summary:hover h4{color:var(--ai2)}
+  details.stage .sb{padding:0 46px 20px 72px}
+  .curacc{margin-top:12px}
+  .curacc:first-of-type{margin-top:30px}
+  .curacc>summary.curtitle{margin:0;padding:16px 18px;background:var(--card);border:1px solid var(--line);border-radius:14px;transition:border-color .2s}
+  .curacc>summary.curtitle:hover{border-color:var(--line2)}
+  .curacc[open]>summary.curtitle{border-radius:14px 14px 0 0;border-bottom-color:transparent}
+  .curacc .cnt{margin-left:auto}
+  .curacc>.cur,.curacc>.accbody{border-radius:0 0 14px 14px;border-top:none}
+  .curacc>.accbody{background:var(--card);border:1px solid var(--line);border-top:none;padding:4px 18px 18px}
+  .curacc>.accbody .learn{margin-top:0}
+  details.hx{display:block;padding:0}
+  details.hx>summary{display:grid;grid-template-columns:108px 1fr 28px;gap:18px;align-items:center;padding:16px 0}
+  details.hx>summary .hb{margin:0;transition:color .2s}
+  details.hx>summary:hover .hb{color:var(--ai2)}
+  details.hx .hr{padding:0 46px 18px 126px}
+  @media(max-width:680px){
+    details.stage>summary{grid-template-columns:34px 1fr 28px;gap:12px}
+    details.stage .sb{padding:0 0 18px 46px}
+    details.hx>summary{grid-template-columns:88px 1fr 28px;gap:12px}
+    details.hx .hr{padding:0 0 16px 100px}
+    .curacc>summary.curtitle{flex-wrap:wrap;gap:8px;padding:14px}
+    .curacc>.accbody .learn{grid-template-columns:1fr!important}
+  }
+
   /* credentials */
   .creds{display:flex;flex-direction:column;gap:11px;margin-top:36px;max-width:720px}
   .cr{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:16px 20px;transition:.3s}
@@ -261,12 +302,13 @@
   <div class="eyebrow">무엇을, 어떻게 배우나요</div>
   <h2 class="s">’아는 것’이 아니라 ‘쓰는 것’,<br>기초부터 에이전트까지 한 흐름으로</h2>
   <p class="lead">다루는 주제는 같아도, 대상의 수준과 목적에 따라 단계·깊이·순서를 다르게 설계합니다. 입문만, 혹은 에이전트까지 끝까지.</p>
+  <p class="acc-hint">항목을 누르면 자세한 내용이 펼쳐집니다.</p>
   <div class="journey">
-    <div class="stage"><div class="sn">01</div><div><h4>기초 · AI 리터러시</h4><p>생성형 AI의 원리와, 우리 업무 어디에 쓸 수 있는지 판단하는 기준부터 첫 프롬프트까지.</p><div class="chips"><span class="chip">AI 원리</span><span class="chip">도구 비교</span><span class="chip">프롬프트 기초</span></div></div></div>
-    <div class="stage"><div class="sn">02</div><div><h4>실무 적용 · 문서·데이터 자동화</h4><p>이메일·기안문·회의록·보고서 작성부터 영수증·공공데이터 정리·시각화까지, 직무별 워크플로우로.</p><div class="chips"><span class="chip">문서 자동화</span><span class="chip">데이터 시각화</span><span class="chip">직무별 적용</span></div></div></div>
-    <div class="stage"><div class="sn">03</div><div><h4>콘텐츠 · 이미지 · 영상</h4><p>카드뉴스·홍보 이미지·영상까지 AI로 직접 만드는 실습.</p><div class="chips"><span class="chip">Text-to-Image</span><span class="chip">Image-to-Video</span><span class="chip">콘텐츠 제작</span></div></div></div>
-    <div class="stage"><div class="sn">04</div><div><h4>바이브 코딩</h4><p>코드 없이 AI와 대화하며 필요한 업무 도구·웹페이지를 직접 만드는 단계.</p><div class="chips"><span class="chip">노코드</span><span class="chip">업무 도구 제작</span></div></div></div>
-    <div class="stage"><div class="sn">05</div><div><h4>AI 에이전트 구성</h4><p>반복 업무를 스스로 처리하는 나만의 AI 업무 비서·자동화 시스템 설계.</p><div class="chips"><span class="chip">에이전트 설계</span><span class="chip">업무 자동화</span></div></div></div>
+    <details class="stage acc"><summary><div class="sn">01</div><h4>기초 · AI 리터러시</h4><span class="chev" aria-hidden="true"></span></summary><div class="sb"><p>생성형 AI의 원리와, 우리 업무 어디에 쓸 수 있는지 판단하는 기준부터 첫 프롬프트까지.</p><div class="chips"><span class="chip">AI 원리</span><span class="chip">도구 비교</span><span class="chip">프롬프트 기초</span></div></div></details>
+    <details class="stage acc"><summary><div class="sn">02</div><h4>실무 적용 · 문서·데이터 자동화</h4><span class="chev" aria-hidden="true"></span></summary><div class="sb"><p>이메일·기안문·회의록·보고서 작성부터 영수증·공공데이터 정리·시각화까지, 직무별 워크플로우로.</p><div class="chips"><span class="chip">문서 자동화</span><span class="chip">데이터 시각화</span><span class="chip">직무별 적용</span></div></div></details>
+    <details class="stage acc"><summary><div class="sn">03</div><h4>콘텐츠 · 이미지 · 영상</h4><span class="chev" aria-hidden="true"></span></summary><div class="sb"><p>카드뉴스·홍보 이미지·영상까지 AI로 직접 만드는 실습.</p><div class="chips"><span class="chip">Text-to-Image</span><span class="chip">Image-to-Video</span><span class="chip">콘텐츠 제작</span></div></div></details>
+    <details class="stage acc"><summary><div class="sn">04</div><h4>바이브 코딩</h4><span class="chev" aria-hidden="true"></span></summary><div class="sb"><p>코드 없이 AI와 대화하며 필요한 업무 도구·웹페이지를 직접 만드는 단계.</p><div class="chips"><span class="chip">노코드</span><span class="chip">업무 도구 제작</span></div></div></details>
+    <details class="stage acc"><summary><div class="sn">05</div><h4>AI 에이전트 구성</h4><span class="chev" aria-hidden="true"></span></summary><div class="sb"><p>반복 업무를 스스로 처리하는 나만의 AI 업무 비서·자동화 시스템 설계.</p><div class="chips"><span class="chip">에이전트 설계</span><span class="chip">업무 자동화</span></div></div></details>
   </div>
   <p class="lead" style="margin-top:22px;font-size:14px;color:var(--dim)">＊ 산업·직무·조직 규모에 따라 단계 구성과 실습 난이도를 다시 설계합니다.</p>
 </div></section>
@@ -275,8 +317,9 @@
   <div class="eyebrow">커리큘럼</div>
   <h2 class="s">과정별 차시 구성</h2>
   <p class="lead">아래는 대표 커리큘럼입니다. 기업·기관의 목적과 인원에 맞춰 차시를 조정해 설계합니다.</p>
+  <p class="acc-hint">항목을 누르면 자세한 내용이 펼쳐집니다.</p>
 
-  <div class="curtitle"><span class="tag tg-basic">PART 1 · 기초</span> 생성형 AI 첫걸음 <span class="cnt">6차시</span></div>
+  <details class="curacc acc"><summary class="curtitle"><span class="tag tg-basic">PART 1 · 기초</span> 생성형 AI 첫걸음 <span class="cnt">6차시</span> <span class="chev" aria-hidden="true"></span></summary>
   <div class="cur">
     <div class="it"><span class="num">1</span>생성형 AI 이해 — 무엇을 맡길 수 있나</div>
     <div class="it"><span class="num">2</span>ChatGPT·Claude 시작하기 — 도구 비교</div>
@@ -284,9 +327,9 @@
     <div class="it"><span class="num">4</span>AI 이미지 만들기 — Text-to-Image</div>
     <div class="it"><span class="num">5</span>AI 콘텐츠 — 카드뉴스·간단 영상</div>
     <div class="it"><span class="num">6</span>AI 윤리·저작권·개인정보보안</div>
-  </div>
+  </div></details>
 
-  <div class="curtitle"><span class="tag tg-pro">PART 2 · 실무 적용</span> 업무에 바로 쓰는 AI <span class="cnt">6차시</span></div>
+  <details class="curacc acc"><summary class="curtitle"><span class="tag tg-pro">PART 2 · 실무 적용</span> 업무에 바로 쓰는 AI <span class="cnt">6차시</span> <span class="chev" aria-hidden="true"></span></summary>
   <div class="cur">
     <div class="it"><span class="num">1</span>문서·보고서 자동 작성 (이메일·기안·회의록)</div>
     <div class="it"><span class="num">2</span>데이터 정리·분석·시각화</div>
@@ -294,33 +337,36 @@
     <div class="it"><span class="num">4</span>업무 자동화 — 반복 작업을 AI로</div>
     <div class="it"><span class="num">5</span>바이브 코딩 — 코드 없이 업무 도구 만들기</div>
     <div class="it"><span class="num">6</span>AI 에이전트 — 나만의 업무 비서 구성</div>
-  </div>
-  <p style="margin-top:22px;font-size:13.5px;font-weight:700;color:var(--sub)">📍 "내 업무 어디에 AI를 넣지?" — 직무별 적용 시나리오</p>
-  <div class="learn" style="grid-template-columns:repeat(2,1fr);margin-top:14px">
+  </div></details>
+  <details class="curacc acc"><summary class="curtitle"><span class="tag tg-pro">직무별</span> 📍 "내 업무 어디에 AI를 넣지?" 적용 시나리오 <span class="cnt">4개 직무</span> <span class="chev" aria-hidden="true"></span></summary>
+  <div class="accbody">
+  <div class="learn" style="grid-template-columns:repeat(2,1fr)">
     <div class="lc"><div class="ic">📝</div><h3>기획·리서치</h3><p>자료 조사·요약, 보고서 초안, 시장·경쟁 분석, 회의록 정리 자동화.</p></div>
     <div class="lc"><div class="ic">📣</div><h3>마케팅·콘텐츠</h3><p>콘텐츠 기획, 카피·상세페이지 제작, 채널별 메시지 변형, 이미지 생성.</p></div>
     <div class="lc"><div class="ic">🤝</div><h3>영업·세일즈</h3><p>고객 관점 제안서, 응대 스크립트, 세일즈 콘텐츠, 리드 정리.</p></div>
     <div class="lc"><div class="ic">🗂</div><h3>사무·행정</h3><p>문서 작성·검토, 데이터 정리, 반복 업무 자동화, 공문서 초안.</p></div>
   </div>
+  </div></details>
 
-  <div class="curtitle"><span class="tag tg-adv">PART 3 · 2026 심화 트랙</span> 조직의 일하는 방식 재설계 <span class="cnt">4트랙 · 조합 설계</span></div>
+  <details class="curacc acc"><summary class="curtitle"><span class="tag tg-adv">PART 3 · 2026 심화 트랙</span> 조직의 일하는 방식 재설계 <span class="cnt">4트랙 · 조합 설계</span> <span class="chev" aria-hidden="true"></span></summary>
   <div class="cur">
     <div class="it"><span class="num">1</span>AI 에이전트 설계 — 직무 목적에 맞춰 구축·최적화</div>
     <div class="it"><span class="num">2</span>바이브 코딩 — 비개발자의 업무용 웹앱·자동화 개발</div>
     <div class="it"><span class="num">3</span>RAG 기반 시스템 구축 — 내부 문서 연동 지능형 시스템</div>
     <div class="it"><span class="num">4</span>AI 거버넌스·리스크 관리 — 저작권·보안·윤리 가이드라인</div>
-  </div>
+  </div></details>
   <p class="lead" style="margin-top:22px;font-size:14px;color:var(--dim)">＊ 조직 수준과 목표에 따라 심화 트랙은 단독 또는 조합으로 설계합니다.</p>
 </div></section>
 
 <section><div class="wrap reveal">
   <div class="eyebrow">교육 설계 프로세스</div>
   <h2 class="s">강의 시간을 파는 것이 아니라,<br>조직의 행동 변화를 설계합니다</h2>
+  <p class="acc-hint">항목을 누르면 자세한 내용이 펼쳐집니다.</p>
   <div class="journey">
-    <div class="stage"><div class="sn">01</div><div><h4>사전 진단</h4><p>교육담당자 인터뷰로 참여자 직무, 활용 수준, 조직의 과제와 기대 결과를 확인합니다.</p></div></div>
-    <div class="stage"><div class="sn">02</div><div><h4>맞춤 설계</h4><p>업종별 사례, 직무별 실습, 프롬프트와 산출물을 교육 목적에 맞춰 구성합니다.</p></div></div>
-    <div class="stage"><div class="sn">03</div><div><h4>참여형 진행</h4><p>듣기만 하지 않고, 자신의 업무와 연결된 결과물을 직접 완성하게 합니다.</p></div></div>
-    <div class="stage"><div class="sn">04</div><div><h4>실행 강화</h4><p>프롬프트·실습자료·적용 기준을 제공해 강의가 현장에서 이어지게 합니다.</p></div></div>
+    <details class="stage acc"><summary><div class="sn">01</div><h4>사전 진단</h4><span class="chev" aria-hidden="true"></span></summary><div class="sb"><p>교육담당자 인터뷰로 참여자 직무, 활용 수준, 조직의 과제와 기대 결과를 확인합니다.</p></div></details>
+    <details class="stage acc"><summary><div class="sn">02</div><h4>맞춤 설계</h4><span class="chev" aria-hidden="true"></span></summary><div class="sb"><p>업종별 사례, 직무별 실습, 프롬프트와 산출물을 교육 목적에 맞춰 구성합니다.</p></div></details>
+    <details class="stage acc"><summary><div class="sn">03</div><h4>참여형 진행</h4><span class="chev" aria-hidden="true"></span></summary><div class="sb"><p>듣기만 하지 않고, 자신의 업무와 연결된 결과물을 직접 완성하게 합니다.</p></div></details>
+    <details class="stage acc"><summary><div class="sn">04</div><h4>실행 강화</h4><span class="chev" aria-hidden="true"></span></summary><div class="sb"><p>프롬프트·실습자료·적용 기준을 제공해 강의가 현장에서 이어지게 합니다.</p></div></details>
   </div>
 </div></section>
 
@@ -328,13 +374,14 @@
   <div class="eyebrow">About · 거쳐온 현장</div>
   <h2 class="s">디지털의 모든 시대를,<br>현장 한복판에서 통과해왔습니다.</h2>
   <p class="lead">검색광고의 태동기부터 모바일·커머스 폭발기, 그리고 지금의 AI 전환기까지 — 매 시대의 최전선에서 직접 운영하고 책임져 온 16년입니다.</p>
+  <p class="acc-hint">항목을 누르면 자세한 내용이 펼쳐집니다.</p>
 
   <div class="histline">
-    <div class="hx"><div class="hy">2009–2012<br><span class="hyb">검색광고 시대</span></div><div class="hc"><div class="hb">NHN Search Marketing <span class="htag">현 플레이디</span></div><div class="hr">네이버 지역광고 <b>오픈멤버</b>로 신규 서비스 런칭에 참여. 대형 병의원·숙박 광고주를 직접 제안·운영하고 사내 신입 교육까지 맡았습니다.</div></div></div>
-    <div class="hx"><div class="hy">2014–2020<br><span class="hyb">커머스·모바일 시대</span></div><div class="hc"><div class="hb">리서치애드 · SK플래닛 11번가 인터넷마케팅팀 BP 팀장</div><div class="hr">DA·SA·Paid 채널을 일괄 운영하며 <b>월 최대 30억 광고 예산과 40개 제휴사·제작사를 총괄</b>해 커뮤니케이션했습니다. 앱 딥링크 구현 및 광고 추적 프로세스 운영 구조화에 참여하고, 브랜드셰어 마케팅 프로젝트의 영업·PT 지원·리포트 관리를 맡았습니다.</div></div></div>
-    <div class="hx"><div class="hy">2020–2023<br><span class="hyb">이커머스 운영 시대</span></div><div class="hc"><div class="hb">비지글로벌 · 부장</div><div class="hr">제조사 상품을 쿠팡·컬리에 입점시키고, <b>발주–정산–재고–손익을 하나의 시스템으로</b> 구축. 채용·교육·인원관리까지 직접 맡아 운영을 자립시켰습니다.</div></div></div>
-    <div class="hx"><div class="hy">2023–2024<br><span class="hyb">사업화 시대</span></div><div class="hc"><div class="hb">바라스페이스 · GM</div><div class="hr">MVP 스타트업에서 서비스를 실제로 구현하고 디벨롭 참여, <b>공공기관 연계 유치 성공 및 마케팅 전 채널 셋업</b>으로 서비스 모델 초기 안착에 함께 하였습니다.</div></div></div>
-    <div class="hx"><div class="hy">2026–<br><span class="hyb">AI 전환 시대</span></div><div class="hc"><div class="hb">AI 실무 교육 · 프리랜서</div><div class="hr">16년 현장 경험 위에 AI를 얹어, 기업·기관·실무자에게 <b>‘일에 바로 쓰는 AI’</b>를 전합니다.</div></div></div>
+    <details class="hx acc"><summary><div class="hy">2009–2012<br><span class="hyb">검색광고 시대</span></div><div class="hc"><div class="hb">NHN Search Marketing <span class="htag">현 플레이디</span></div></div><span class="chev" aria-hidden="true"></span></summary><div class="hc"><div class="hr">네이버 지역광고 <b>오픈멤버</b>로 신규 서비스 런칭에 참여. 대형 병의원·숙박 광고주를 직접 제안·운영하고 사내 신입 교육까지 맡았습니다.</div></div></details>
+    <details class="hx acc"><summary><div class="hy">2014–2020<br><span class="hyb">커머스·모바일 시대</span></div><div class="hc"><div class="hb">리서치애드 · SK플래닛 11번가 인터넷마케팅팀 BP 팀장</div></div><span class="chev" aria-hidden="true"></span></summary><div class="hc"><div class="hr">DA·SA·Paid 채널을 일괄 운영하며 <b>월 최대 30억 광고 예산과 40개 제휴사·제작사를 총괄</b>해 커뮤니케이션했습니다. 앱 딥링크 구현 및 광고 추적 프로세스 운영 구조화에 참여하고, 브랜드셰어 마케팅 프로젝트의 영업·PT 지원·리포트 관리를 맡았습니다.</div></div></details>
+    <details class="hx acc"><summary><div class="hy">2020–2023<br><span class="hyb">이커머스 운영 시대</span></div><div class="hc"><div class="hb">비지글로벌 · 부장</div></div><span class="chev" aria-hidden="true"></span></summary><div class="hc"><div class="hr">제조사 상품을 쿠팡·컬리에 입점시키고, <b>발주–정산–재고–손익을 하나의 시스템으로</b> 구축. 채용·교육·인원관리까지 직접 맡아 운영을 자립시켰습니다.</div></div></details>
+    <details class="hx acc"><summary><div class="hy">2023–2024<br><span class="hyb">사업화 시대</span></div><div class="hc"><div class="hb">바라스페이스 · GM</div></div><span class="chev" aria-hidden="true"></span></summary><div class="hc"><div class="hr">MVP 스타트업에서 서비스를 실제로 구현하고 디벨롭 참여, <b>공공기관 연계 유치 성공 및 마케팅 전 채널 셋업</b>으로 서비스 모델 초기 안착에 함께 하였습니다.</div></div></details>
+    <details class="hx acc"><summary><div class="hy">2026–<br><span class="hyb">AI 전환 시대</span></div><div class="hc"><div class="hb">AI 실무 교육 · 프리랜서</div></div><span class="chev" aria-hidden="true"></span></summary><div class="hc"><div class="hr">16년 현장 경험 위에 AI를 얹어, 기업·기관·실무자에게 <b>‘일에 바로 쓰는 AI’</b>를 전합니다.</div></div></details>
   </div>
 </div></section>
 
