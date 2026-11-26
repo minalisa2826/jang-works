@@ -1,0 +1,961 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AX 실무전환의 궤도_ JANGWORKS</title>
+<meta name="description" content="JANGWORKS 장민아 강사를 소개하는 발표형 페이지">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;700&family=Nanum+Myeongjo:wght@800&family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+<style>
+/* 기획: 1920×1080 무대 하나를 창에 맞춰 축소한다. 지루한 PPT 한 장이 스스로 고쳐진 뒤, 9개 장면으로 장민아의 이야기를 넘긴다.
+   색: JANGWORKS 남색(엠블럼) + 금색 + 프로필 사진의 토프. 발표 화면이라 테마와 무관하게 한 가지 모습으로 고정한다. */
+:root{
+  --navy:#13254d; --navy-deep:#0c1a38; --gold:#c9a24b; --gold-soft:#e6cf96;
+  --taupe:#b59c86; --sand:#e9e0d5; --paper:#f7f7f5; --ink:#14161c; --mute:#6c727d;
+  --sel:#2b5cff; --red:#d6402b; --letterbox:#0b0d12;
+  --f-kr:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-num:Anton,"Noto Sans KR",Impact,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --f-serif:"Nanum Myeongjo","Batang",serif;
+  --f-boring:"Malgun Gothic","맑은 고딕",Arial,Helvetica,sans-serif;
+  color-scheme:dark;
+}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;overflow:hidden;background:var(--letterbox);color:#f2f4f8;font:15px/1.5 var(--f-kr)}
+body.idle{cursor:none}
+#view{position:fixed;inset:0;overflow:hidden;touch-action:manipulation}
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:center;overflow:hidden;background:#fff;font-family:var(--f-kr)}
+.scene{position:absolute;inset:0;overflow:hidden}
+.scene *{box-sizing:border-box;word-break:keep-all}
+.abs{position:absolute}
+a,button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+
+/* ---------- 01 office: 지루한 슬라이드 ---------- */
+#s-office{background:#fff;color:#000;font-family:var(--f-boring)}
+.boring{position:absolute;inset:0;background:#fff}
+.b-title{left:0;right:0;top:395px;text-align:center;font-size:96px;line-height:1.1}
+.b-sub{left:0;right:0;top:560px;text-align:center;font-size:44px;color:#7f7f7f}
+.b-slide2{position:absolute;inset:0;background:#fff;opacity:0}
+#s-office[data-beat="1"] .b-slide2,#s-office[data-beat="2"] .b-slide2{opacity:1}
+.ag-title{left:130px;top:104px;font-size:80px;line-height:1.15;white-space:pre}
+.caret{display:inline-block;width:4px;height:76px;background:#000;vertical-align:-10px;margin-left:5px;opacity:0}
+.caret.on{animation:blink .9s steps(1) infinite;opacity:1}
+@keyframes blink{50%{opacity:0}}
+.ag-list{left:150px;top:290px;font-size:46px;color:#262626;line-height:1}
+.ag-list li{list-style:none;height:108px;display:flex;align-items:center;transform:translateX(-1100px);transition:transform .5s cubic-bezier(.2,.8,.2,1),opacity .2s,height .25s}
+#s-office[data-beat="1"] .ag-list li,#s-office[data-beat="2"] .ag-list li{transform:none}
+.ag-list li:nth-child(2){transition-delay:.12s}.ag-list li:nth-child(3){transition-delay:.24s}.ag-list li:nth-child(4){transition-delay:.36s}.ag-list li:nth-child(5){transition-delay:.48s}
+.ag-list li.gone{opacity:0;height:0;transition-delay:0s}
+.ag-list{margin:0;padding:0}
+.clip{left:1080px;top:300px;width:700px;height:520px}
+.clip .bar{position:absolute;bottom:60px;width:110px;background:linear-gradient(90deg,#9aa9c2,#d8e0ee 40%,#7d8fae);box-shadow:14px -10px 0 #5f6f8d,8px 8px 18px rgba(0,0,0,.35);transform-origin:bottom;transition:transform .5s cubic-bezier(.6,0,.4,1)}
+.clip .bar:nth-child(1){left:60px;height:170px}.clip .bar:nth-child(2){left:230px;height:260px}.clip .bar:nth-child(3){left:400px;height:330px}.clip .bar:nth-child(4){left:570px;height:410px;background:linear-gradient(90deg,#e4b04a,#ffe08a 40%,#c98f22);box-shadow:14px -10px 0 #9c6c14,8px 8px 18px rgba(0,0,0,.35)}
+.clip .base{position:absolute;left:30px;right:0;bottom:46px;height:14px;background:linear-gradient(#c9ced6,#8d95a1)}
+.clip .cap{position:absolute;left:0;right:0;bottom:0;text-align:center;font-size:28px;color:#555;font-style:italic;transition:opacity .3s}
+.clip.flat .bar{transform:scaleY(0)}.clip.flat .cap,.clip.flat .base{opacity:0}
+.selbox{position:absolute;border:2px solid var(--sel);pointer-events:none;opacity:0;z-index:50;transition:left .34s cubic-bezier(.34,1.56,.64,1),top .34s cubic-bezier(.34,1.56,.64,1),width .34s cubic-bezier(.34,1.56,.64,1),height .34s cubic-bezier(.34,1.56,.64,1),opacity .2s,border-color .2s}
+.selbox i{position:absolute;width:16px;height:16px;background:#fff;border:2px solid var(--sel);transition:border-color .2s}
+.selbox i:nth-child(1){left:-9px;top:-9px}.selbox i:nth-child(2){left:calc(50% - 8px);top:-9px}.selbox i:nth-child(3){right:-9px;top:-9px}.selbox i:nth-child(4){right:-9px;top:calc(50% - 8px)}.selbox i:nth-child(5){right:-9px;bottom:-9px}.selbox i:nth-child(6){left:calc(50% - 8px);bottom:-9px}.selbox i:nth-child(7){left:-9px;bottom:-9px}.selbox i:nth-child(8){left:-9px;top:calc(50% - 8px)}
+.selbox b{position:absolute;left:calc(50% - 9px);top:-62px;width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid var(--sel)}
+.selbox b::after{content:"";position:absolute;left:6px;top:16px;width:2px;height:34px;background:var(--sel)}
+.selbox.white,.selbox.white i,.selbox.white b{border-color:#fff}.selbox.white b::after{background:#fff}
+
+/* 고쳐진 슬라이드 10장 */
+.rs{position:absolute;inset:0;font-family:var(--f-kr)}
+.rs1{background:#0a0a0a;color:#fff}
+.rs1 .k{left:110px;bottom:130px;font-size:330px;font-weight:900;line-height:.9;letter-spacing:-.04em}
+.rs1 .dot{right:150px;top:150px;width:90px;height:90px;border-radius:50%;background:#ff3b2f}
+.rs1 .tag{left:120px;top:110px;font:500 30px var(--f-mono);color:#9a9a9a;letter-spacing:.1em}
+.rs2{background:#0d2a5c;color:#dfe9ff;background-image:linear-gradient(rgba(255,255,255,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.09) 1px,transparent 1px);background-size:60px 60px}
+.rs2 .l{left:180px;font:400 52px/1 var(--f-mono)}
+.rs2 .l b{color:#fff;font-family:var(--f-kr);font-weight:700}
+.rs2 .hd{left:180px;top:150px;font:700 30px var(--f-mono);color:#7fa6ff;letter-spacing:.14em}
+.rs3{background:#d9f26b;color:var(--navy)}
+.rs3 .k{left:90px;top:40px;font:640px/1 var(--f-num)}
+.rs3 .u{left:900px;top:540px;font-size:120px;font-weight:900;line-height:1.1}
+.rs4{background:var(--taupe);color:#fff}
+.rs4 img{position:absolute;right:120px;bottom:0;height:1000px;width:auto}
+.rs4 .k{left:130px;top:330px;font-size:118px;font-weight:900;line-height:1.2;letter-spacing:-.02em}
+.rs5{background:#f1ede4;color:#111}
+.rs5 .c{left:1150px;top:140px;width:520px;height:520px;border-radius:50%;background:#e2382b}
+.rs5 .sq{left:1440px;top:560px;width:330px;height:330px;background:#1f4fb6}
+.rs5 .tr{left:960px;top:620px;width:380px;height:330px;background:#f3c318;clip-path:polygon(50% 0,100% 100%,0 100%)}
+.rs5 .k{left:120px;top:600px;font-size:230px;font-weight:900;line-height:1}
+.rs6{background:#08100b;color:#5dff8f;font-family:var(--f-mono)}
+.rs6 .l{left:140px;font-size:62px;line-height:1.2}
+.rs6 .l.dim{color:#3a9a5a}
+.rs7{background:#6b0f2c;color:#fbe9ef}
+.rs7 .k{left:150px;top:250px;font:800 124px/1.38 var(--f-serif);letter-spacing:-.02em}
+.rs7 .by{left:156px;top:850px;font:400 32px var(--f-mono);color:#e7a9bd;letter-spacing:.08em}
+.rs8{background:#ff6a2b;color:#111}
+.rs8 .st{padding:18px 46px;border-radius:999px;font-size:84px;font-weight:900;background:#fff;box-shadow:10px 10px 0 #111}
+.rs8 .st.dk{background:#111;color:#ff6a2b;box-shadow:10px 10px 0 #fff}
+.rs8 .k{left:0;right:0;top:420px;text-align:center;font-size:200px;font-weight:900}
+.rs9{background:#fff;color:#111}
+.rs9 .k{left:0;right:0;top:500px;text-align:center;font-size:60px;font-weight:500;letter-spacing:.3em}
+.rs9 .ln{left:900px;top:600px;width:120px;height:2px;background:#111}
+.rs10{background:#fff;color:var(--navy)}
+.rs10 img{position:absolute;left:150px;top:230px;width:620px;height:620px}
+.rs10 .k{left:880px;top:250px;font-size:190px;font-weight:900;line-height:1;letter-spacing:-.03em}
+.rs10 .r{left:888px;top:500px;font-size:44px;font-weight:700}
+.rs10 .rule{left:888px;top:600px;width:160px;height:6px;background:var(--gold)}
+.rs10 .q{left:888px;top:650px;font-size:40px;font-weight:500;line-height:1.5;color:#3b4a6b}
+.rs10 .mono{left:888px;top:190px;font:700 28px var(--f-mono);color:var(--gold);letter-spacing:.16em}
+
+/* ---------- 공통 장면 타이포 ---------- */
+.eyebrow{font:700 28px var(--f-mono);letter-spacing:.16em;text-transform:uppercase}
+.h{font-size:76px;font-weight:900;line-height:1.24;letter-spacing:-.025em;margin:0;white-space:pre-line}
+.fade-up{opacity:0;transform:translateY(40px);transition:opacity .6s,transform .7s cubic-bezier(.2,.8,.2,1)}
+.scene.on .fade-up{opacity:1;transform:none}
+
+/* ---------- 02 before ---------- */
+#s-before{background:var(--navy-deep);color:#fff}
+#s-before .eyebrow{left:120px;top:110px;color:var(--gold)}
+#s-before .h{left:120px;top:170px}
+.tl-line{left:150px;top:600px;width:1640px;height:4px;background:rgba(255,255,255,.35);transform:scaleX(0);transform-origin:left;transition:transform 1.3s cubic-bezier(.6,0,.2,1) .3s}
+.scene.on .tl-line{transform:none}
+.node{width:320px;opacity:0;transform:translateY(30px);transition:opacity .5s,transform .6s}
+.scene.on .node{opacity:1;transform:none}
+.node .yr{font:700 30px var(--f-mono);color:var(--gold);position:absolute;top:0;left:0}
+.node .era{position:absolute;top:44px;left:0;font-size:36px;font-weight:900}
+.node .pt{position:absolute;top:112px;left:-4px;width:30px;height:30px;border-radius:50%;background:var(--navy-deep);border:4px solid #fff}
+.node .co{position:absolute;top:172px;left:0;font-size:27px;font-weight:700;line-height:1.35;color:#fff}
+.node .ds{position:absolute;top:258px;left:0;font-size:23px;line-height:1.45;color:#aab4cc;width:310px}
+.node.now .pt{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 0 rgba(201,162,75,.7);animation:pulse 1.8s infinite 2s}
+.node.now .era{color:var(--gold-soft)}
+@keyframes pulse{70%{box-shadow:0 0 0 26px rgba(201,162,75,0)}100%{box-shadow:0 0 0 0 rgba(201,162,75,0)}}
+.brands{left:120px;right:120px;top:930px;display:flex;flex-wrap:wrap;gap:12px 14px;align-items:center}
+.brands span{font-size:26px;padding:8px 20px;border:1.5px solid rgba(255,255,255,.3);border-radius:999px;color:#dfe5f2;opacity:0;transform:translateY(16px);transition:opacity .4s,transform .4s}
+.brands .lab{border:0;padding-left:0;font:700 24px var(--f-mono);color:var(--gold);letter-spacing:.1em}
+#s-before[data-beat="1"] .brands span{opacity:1;transform:none}
+
+/* ---------- 03 numbers ---------- */
+#s-numbers{background:#fbfbfa;color:var(--navy)}
+#s-numbers .eyebrow{left:120px;top:110px;color:var(--gold)}
+.num{left:120px;top:200px;width:1150px;opacity:0;transform:translateY(140px);transition:opacity .45s,transform .6s cubic-bezier(.2,.8,.2,1)}
+.num.cur{opacity:1;transform:none}
+.num.past{opacity:0;transform:translateY(-140px)}
+.num .big{display:flex;align-items:baseline;gap:12px;line-height:1}
+.num .n{font:440px/1 var(--f-num);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.num .u{font-size:150px;font-weight:900}
+.num .lb{margin-top:40px;font-size:60px;font-weight:900;color:var(--ink)}
+.num .sb{margin-top:14px;font-size:34px;color:var(--mute)}
+.nlist{left:1350px;top:330px;width:460px;margin:0;padding:0;list-style:none;border-left:2px solid #dfe2e8}
+.nlist li{padding:22px 0 22px 34px;font:400 26px var(--f-mono);color:#9aa1ad;transition:color .3s}
+.nlist li b{font-family:var(--f-kr);font-weight:700;margin-left:10px}
+.nlist li.cur{color:var(--navy);box-shadow:-4px 0 0 var(--gold)}
+
+/* ---------- 04 language ---------- */
+#s-language{background:var(--paper);color:var(--ink)}
+#s-language .eyebrow{left:120px;top:110px;color:var(--red)}
+#s-language .h{left:120px;top:170px}
+.lrow{left:120px;width:1700px;height:100px}
+.lrow .j{position:absolute;left:0;top:22px;font:400 40px var(--f-mono);color:#7c828c;white-space:nowrap}
+.lrow .strike{position:absolute;left:-6px;right:-6px;top:calc(50% - 2px);height:5px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.6,0,.3,1)}
+.lrow .ar{position:absolute;left:820px;top:18px;font-size:46px;color:var(--red);opacity:0;transition:opacity .3s}
+.lrow .p{position:absolute;left:910px;top:14px;font-size:52px;font-weight:900;color:var(--navy);white-space:nowrap;clip-path:inset(0 100% 0 0);transition:clip-path .7s steps(14)}
+#s-language[data-beat="1"] .strike{transform:none}
+#s-language[data-beat="1"] .ar{opacity:1}
+#s-language[data-beat="1"] .p{clip-path:inset(0 0 0 0)}
+#s-language[data-beat="1"] .j{color:#b3b7bd}
+
+/* ---------- 05 now ---------- */
+#s-now{background:var(--navy);color:#fff}
+#s-now .eyebrow{left:120px;top:110px;color:var(--gold)}
+.swap{left:120px;top:170px;width:1700px;height:110px}
+.swap .h{position:absolute;left:0;top:0;transition:opacity .45s,transform .5s}
+.swap .h2{opacity:0;transform:translateY(30px)}
+#s-now[data-beat="1"] .swap .h1{opacity:0;transform:translateY(-30px)}
+#s-now[data-beat="1"] .swap .h2{opacity:1;transform:none}
+.tile{position:absolute;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.16);padding:20px 24px;overflow:hidden;transition:left .7s cubic-bezier(.65,0,.25,1),top .7s cubic-bezier(.65,0,.25,1),width .7s cubic-bezier(.65,0,.25,1),height .7s cubic-bezier(.65,0,.25,1),opacity .5s,transform .5s,padding .5s}
+.tile .sec{font:700 18px var(--f-mono);letter-spacing:.12em;color:var(--gold-soft);transition:opacity .3s}
+.tile .org{font-size:29px;font-weight:700;line-height:1.3;margin-top:6px;transition:font-size .5s,margin .5s}
+.tile .tp{font-size:21px;color:#b8c3dc;line-height:1.4;margin-top:6px;transition:opacity .3s}
+#s-now:not(.on) .tile{opacity:0;transform:translateY(40px) scale(.96)}
+#s-now[data-beat="1"] .tile{padding:0 22px;display:flex;align-items:center}
+#s-now[data-beat="1"] .tile .sec,#s-now[data-beat="1"] .tile .tp{display:none}
+#s-now[data-beat="1"] .tile .org{font-size:25px;margin-top:0;white-space:nowrap}
+.colh{top:318px;width:540px;font-size:30px;font-weight:900;color:var(--gold-soft);opacity:0;transition:opacity .4s .4s;display:flex;justify-content:space-between;align-items:baseline}
+.colh small{font:400 20px var(--f-mono);color:#9fb0d6}
+#s-now[data-beat="1"] .colh{opacity:1}
+
+/* ---------- 06 ladder ---------- */
+#s-ladder{background:var(--sand);color:var(--navy)}
+#s-ladder .eyebrow{left:120px;top:110px;color:#8a6d4f}
+#s-ladder .h{left:120px;top:170px}
+.step{width:300px;background:var(--navy);color:#fff;padding:26px 26px;transform:scaleY(0);transform-origin:bottom;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.scene.on .step{transform:none}
+.step .no{font:700 24px var(--f-mono);color:var(--gold)}
+.step .t{font-size:31px;font-weight:900;line-height:1.3;margin-top:10px}
+.step .tg{font-size:21px;color:#b9c4dd;line-height:1.5;margin-top:10px}
+.walker{width:44px;height:44px;border-radius:50%;background:var(--gold);box-shadow:0 6px 0 #8a6d2a;transition:left .38s cubic-bezier(.3,0,.3,1),top .38s cubic-bezier(.3,1.6,.5,1)}
+.lcap{left:120px;top:395px;width:840px;margin:0;font-size:32px;line-height:1.5;color:#4a5168;opacity:0;transition:opacity .5s 1.8s}
+#s-ladder[data-beat="1"] .lcap{opacity:1}
+
+/* ---------- 07 process ---------- */
+#s-process{background:#fff;color:var(--ink)}
+#s-process .eyebrow{left:120px;top:100px;color:var(--gold)}
+#s-process .h{left:120px;top:160px;font-size:68px}
+.pline{left:300px;top:446px;width:1320px;height:3px;background:var(--navy);transform:scaleX(0);transform-origin:left;transition:transform 1.2s cubic-bezier(.6,0,.2,1) .2s}
+.scene.on .pline{transform:none}
+.pn{width:400px;text-align:center;opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s}
+.scene.on .pn{opacity:1;transform:none}
+.pn .c{width:70px;height:70px;margin:0 auto;border-radius:50%;background:var(--navy);color:#fff;font:700 26px/70px var(--f-mono)}
+.pn .t{font-size:38px;font-weight:900;margin-top:22px;color:var(--navy)}
+.pn .d{font-size:23px;line-height:1.5;color:#59606b;margin:10px auto 0;width:340px}
+.tools{left:120px;right:120px;top:760px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;opacity:0;transform:translateY(40px);transition:opacity .5s,transform .6s;pointer-events:none}
+.tools-lab{left:120px;top:712px;font:700 22px var(--f-mono);letter-spacing:.14em;color:var(--mute);opacity:0;transition:opacity .4s}
+#s-process[data-beat="1"] .tools{opacity:1;transform:none;pointer-events:auto}
+#s-process[data-beat="1"] .tools-lab{opacity:1}
+#s-process[data-beat="1"] .pn .d{opacity:.45}
+.tool{display:block;text-decoration:none;background:var(--navy);color:#fff;padding:28px 32px;min-height:190px;transition:background .2s}
+.tool:hover{background:#1d3670}
+.tool .t{font-size:34px;font-weight:900}
+.tool .d{font-size:23px;color:#c2cbe0;margin-top:8px;line-height:1.45}
+.tool .go{font:700 20px var(--f-mono);color:var(--gold);margin-top:14px;letter-spacing:.06em}
+
+/* ---------- 08 credentials ---------- */
+#s-credentials{background:var(--navy-deep);color:#fff}
+#s-credentials .eyebrow{left:120px;top:110px;color:var(--gold)}
+#s-credentials .h{left:120px;top:170px;font-size:84px}
+.cred-sub{left:120px;top:420px;width:620px;font-size:30px;line-height:1.6;color:#b8c3dc}
+.stamp{width:470px;height:330px;border:5px double var(--gold);color:var(--gold-soft);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:30px;opacity:0}
+.stamp .t{font-size:36px;font-weight:900;line-height:1.3;color:#fff}
+.stamp .d{font:400 20px/1.5 var(--f-mono);margin-top:16px;color:var(--gold-soft)}
+.scene.on .stamp{animation:stamp .45s cubic-bezier(.3,1.5,.5,1) forwards}
+@keyframes stamp{0%{opacity:0;transform:scale(1.7) rotate(var(--r))}100%{opacity:1;transform:scale(1) rotate(var(--r))}}
+
+/* ---------- 09 contact ---------- */
+#s-contact{background:var(--navy);color:#fff}
+#s-contact .photo{right:0;top:0;width:800px;height:1080px;object-fit:cover;object-position:50% 12%}
+#s-contact .brand{left:120px;top:110px;font:700 30px var(--f-mono);color:var(--gold);letter-spacing:.2em}
+#s-contact .h{left:120px;top:200px;font-size:104px}
+.c-sub{left:120px;top:480px;width:880px;font-size:30px;line-height:1.6;color:#c2cbe0}
+.c-btns{left:120px;top:640px;width:1000px;display:flex;flex-wrap:wrap;gap:16px}
+.cbtn{display:inline-flex;align-items:center;gap:10px;min-height:76px;padding:0 26px;font-size:28px;font-weight:700;text-decoration:none;border:2px solid rgba(255,255,255,.4);color:#fff;transition:background .2s,border-color .2s}
+.cbtn:hover{background:rgba(255,255,255,.1);border-color:#fff}
+.cbtn.pri{background:var(--gold);border-color:var(--gold);color:var(--navy-deep)}
+.cbtn.pri:hover{background:var(--gold-soft)}
+.c-lines{left:120px;top:800px;display:flex;flex-direction:column;gap:12px}
+.c-line{display:flex;align-items:center;gap:18px;font:400 32px var(--f-mono);color:#fff;user-select:text}
+.c-line .lab{font:700 22px var(--f-mono);color:var(--gold);letter-spacing:.12em;width:90px}
+.copy{font:700 20px var(--f-kr);padding:8px 16px;border:1.5px solid rgba(255,255,255,.4);background:none;cursor:pointer}
+.copy:hover{border-color:#fff}
+.c-end{left:430px;top:116px;font:400 22px var(--f-mono);color:#8796bb}
+
+/* ---------- 화면 장치 ---------- */
+#ui{position:fixed;inset:0;pointer-events:none;z-index:10}
+#ui>*{pointer-events:auto}
+.hud{position:absolute;right:calc(22px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));font:400 14px var(--f-mono);color:rgba(127,127,127,.95);pointer-events:none!important;font-variant-numeric:tabular-nums}
+.nav{position:absolute;left:calc(16px + env(safe-area-inset-left,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px));display:flex;gap:6px;transition:opacity .4s}
+.nav button{width:44px;height:44px;border:0;border-radius:50%;background:rgba(16,18,24,.72);color:#f2f4f8;font-size:18px;cursor:pointer}
+.nav button:hover{background:rgba(16,18,24,.92)}
+body.idle .nav{opacity:0}
+.panel{background:rgba(16,18,24,.94);color:#f2f4f8}
+.notes{position:absolute;left:0;right:0;bottom:0;padding:16px max(24px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(24px,env(safe-area-inset-left,0px));display:flex;gap:24px;justify-content:space-between;align-items:flex-end}
+.notes p{margin:0;max-width:70ch;font-size:17px;white-space:pre-line}
+.notes .meta{color:#a4abb8;font:400 14px var(--f-mono);white-space:nowrap}
+.over{position:absolute;inset:0;overflow:auto;padding:40px max(24px,env(safe-area-inset-right,0px)) 40px max(24px,env(safe-area-inset-left,0px));display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px;align-content:start}
+.over h2{grid-column:1/-1;margin:0;font-size:18px;font-weight:700}
+.over button{all:unset;cursor:pointer;display:grid;gap:8px}
+.over .th{aspect-ratio:16/9;max-width:100%;display:flex;align-items:flex-end;padding:12px 14px;font-size:15px;font-weight:700;outline:2px solid transparent;outline-offset:3px}
+.over button:hover .th,.over button:focus-visible .th,.over button[aria-current=true] .th{outline-color:var(--sel)}
+.over span{color:#a4abb8;font-size:13px}
+.help{position:absolute;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(64px + env(safe-area-inset-bottom,0px));padding:18px 22px;display:grid;grid-template-columns:auto auto;gap:6px 22px;max-width:calc(100vw - 40px);font-size:14px}
+.help b{font:700 13px var(--f-mono)}.help span{color:#a4abb8}
+.toast{position:absolute;left:50%;top:calc(18px + env(safe-area-inset-top,0px));transform:translateX(-50%);padding:9px 16px;font-size:14px;transition:opacity .5s;max-width:calc(100vw - 32px);text-align:center;pointer-events:none!important}
+
+/* ---------- 우주 무대 ---------- */
+#stage{background:#03050c}
+#glc{position:absolute;left:0;top:0;width:1920px;height:1080px;z-index:0;display:block}
+#fxv{position:absolute;inset:0;z-index:40;pointer-events:none;opacity:0;transition:opacity 1s;background:radial-gradient(ellipse at 50% 50%,transparent 52%,rgba(0,0,0,.6) 100%)}
+#stage.spaceon #fxv{opacity:1}
+.scene.space{background:transparent!important;color:#fff}
+.scene.space::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,6,16,.8) 0%,rgba(3,6,16,.45) 46%,rgba(3,6,16,0) 74%);pointer-events:none}
+.scene.space .h{text-shadow:0 0 36px rgba(90,130,255,.35)}
+#s-numbers .num .n{background:linear-gradient(180deg,#fff 35%,#e6cf96);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 34px rgba(120,150,255,.4))}
+#s-numbers .num .u{color:var(--gold-soft)}
+#s-numbers .num .lb{color:#fff}#s-numbers .num .sb{color:#aab4cc}
+#s-numbers .nlist{border-left-color:rgba(255,255,255,.18)}
+#s-numbers .nlist li{color:#6f7b98}#s-numbers .nlist li.cur{color:#fff}
+#s-language .h{color:#fff}#s-language .eyebrow{color:#ff7a62}
+#s-language .lrow .j{color:#9aa4bb}#s-language[data-beat="1"] .j{color:#566079}
+#s-language .lrow .strike{background:#ff5a43}#s-language .lrow .ar{color:#ff7a62}
+#s-language .lrow .p{color:var(--gold-soft)}
+#s-now .tile{background:rgba(19,37,77,.55)}
+#s-ladder .h{color:#fff}#s-ladder .eyebrow{color:var(--gold)}
+#s-ladder .step{background:linear-gradient(180deg,rgba(46,78,165,.6),rgba(12,26,56,.9));border:1px solid rgba(201,162,75,.55)}
+#s-ladder .lcap{color:#c2cbe0}
+#s-ladder .walker{box-shadow:0 0 34px 8px rgba(230,207,150,.65)}
+#s-process .h{color:#fff}
+#s-process .pline{background:linear-gradient(90deg,var(--gold),#7fa6ff)}
+#s-process .pn .c{background:var(--gold);color:var(--navy-deep);box-shadow:0 0 26px rgba(201,162,75,.6)}
+#s-process .pn .t{color:#fff}#s-process .pn .d{color:#aab4cc}
+#s-process .tools-lab{color:#8796bb}
+#s-process .tool{background:rgba(19,37,77,.75);border:1px solid rgba(255,255,255,.14)}
+#s-process .tool:hover{background:rgba(44,74,160,.85)}
+#s-credentials .stamp{background:rgba(12,26,56,.55)}
+#s-contact .photo{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 38%);mask-image:linear-gradient(90deg,transparent 0,#000 38%)}
+
+/* ---------- 은하 등장 ---------- */
+.g-enter{left:0;right:0;top:505px;text-align:center;font:700 30px var(--f-mono);color:#cfe0ff;letter-spacing:.6em;opacity:0;transition:opacity 1s .9s}
+#s-galaxy.on[data-beat="0"] .g-enter{opacity:1}
+.g-copy{left:120px;top:230px;width:900px;opacity:0;transform:translateX(-50px);transition:opacity 1s .4s,transform 1.1s cubic-bezier(.2,.8,.2,1) .4s}
+#s-galaxy[data-beat="1"] .g-copy{opacity:1;transform:none}
+.g-copy .eyebrow{color:var(--gold)}
+.g-copy .h{font-size:112px;line-height:1.14;margin-top:26px}
+.g-copy p{font-size:32px;line-height:1.6;color:#c2cbe0;margin:34px 0 0}
+.g-name{margin-top:52px;display:flex;align-items:baseline;gap:22px;font-size:34px;font-weight:900}
+.g-name span{font:700 22px var(--f-mono);color:var(--gold);letter-spacing:.16em}
+
+/* ---------- 영상 ---------- */
+#s-films .eyebrow{left:120px;top:110px;color:var(--gold)}
+#s-films .h{left:120px;top:170px;font-size:64px}
+.flist{left:120px;top:400px;width:640px;margin:0;padding:0;list-style:none}
+.flist li{display:grid;grid-template-columns:52px 1fr;gap:2px 14px;padding:13px 0;border-top:1px solid rgba(255,255,255,.13)}
+.flist .no{font:700 21px var(--f-mono);color:var(--gold);grid-row:span 2;padding-top:4px}
+.flist .t{font-size:25px;font-weight:700}
+.flist .m{font-size:19px;color:#8f9bb8}
+.screen{left:830px;top:270px;width:880px;height:495px;background:#000;transform:perspective(1800px) rotateY(-15deg) rotateX(2deg);transform-origin:left center;box-shadow:0 0 0 2px rgba(201,162,75,.65),0 0 140px rgba(90,130,255,.5)}
+.scene.on .screen{animation:screenIn 1.3s cubic-bezier(.2,.8,.2,1) both .35s}
+@keyframes screenIn{from{opacity:0;transform:perspective(1800px) rotateY(-70deg) translateZ(-500px)}to{opacity:1;transform:perspective(1800px) rotateY(-15deg) rotateX(2deg)}}
+.screen video{width:100%;height:100%;display:block;object-fit:cover}
+.screen .cap{position:absolute;left:0;top:-54px;font:700 22px var(--f-mono);color:#cfe0ff;letter-spacing:.12em;white-space:nowrap}
+.screen .snd{position:absolute;right:18px;bottom:18px;font:700 20px var(--f-kr);padding:10px 18px;border:1.5px solid rgba(255,255,255,.6);background:rgba(0,0,0,.55);color:#fff;cursor:pointer}
+
+/* ---------- 슬라이드 타워 ---------- */
+#s-tower .eyebrow{left:120px;top:110px;color:var(--gold)}
+.t-count{left:120px;top:180px;display:flex;align-items:baseline;gap:20px;transition:opacity .5s}
+.t-count b{font:320px/1 var(--f-num);color:#fff;text-shadow:0 0 60px rgba(120,150,255,.65);font-variant-numeric:tabular-nums;font-weight:400}
+.t-count small{font-size:46px;font-weight:900;color:var(--gold-soft)}
+.t-sub{left:124px;top:540px;width:720px;font-size:31px;line-height:1.6;color:#c2cbe0;margin:0;transition:opacity .5s}
+#s-tower[data-beat="1"] .t-count,#s-tower[data-beat="1"] .t-sub{opacity:0}
+.t-list{left:120px;top:180px;width:820px;opacity:0;transition:opacity .8s .5s;pointer-events:none}
+#s-tower[data-beat="1"] .t-list{opacity:1}
+.t-list .h{font-size:52px;line-height:1.22}
+.t-list ol{margin:26px 0 0;padding:0;list-style:none}
+.t-list li{display:grid;grid-template-columns:52px 1fr;gap:0 14px;padding:9px 0;border-top:1px solid rgba(255,255,255,.13)}
+.t-list .no{font:700 21px var(--f-mono);color:var(--gold);grid-row:span 2;padding-top:4px}
+.t-list .t{font-size:26px;font-weight:700}
+.t-list .m{font-size:19px;color:#8f9bb8}
+@media (prefers-reduced-motion:reduce){#stage *,#stage *::before{transition-duration:.01s!important;transition-delay:0s!important;animation-duration:.01s!important;animation-delay:0s!important}}
+</style>
+
+<div id="view" aria-roledescription="발표" aria-label="장민아 강사 소개 발표">
+<div id="stage">
+<canvas id="glc" aria-hidden="true"></canvas>
+<div id="fxv"></div>
+
+<!-- 01 office -->
+<section class="scene" id="s-office" data-beat="0" aria-label="지루한 슬라이드">
+  <div class="boring">
+    <div class="abs b-title">장민아 강사 소개</div>
+    <div class="abs b-sub">강사 프로필 · 2026</div>
+  </div>
+  <div class="b-slide2">
+    <div class="abs ag-title"><span id="agText">목차</span><span class="caret" id="caret"></span></div>
+    <ul class="abs ag-list" id="agList">
+      <li>•&nbsp;&nbsp;&nbsp;소개</li><li>•&nbsp;&nbsp;&nbsp;경력</li><li>•&nbsp;&nbsp;&nbsp;강의 실적</li><li>•&nbsp;&nbsp;&nbsp;자격</li><li>•&nbsp;&nbsp;&nbsp;문의</li>
+    </ul>
+    <div class="abs clip" id="clip"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="base"></div><div class="cap">성장 그래프 (예시)</div></div>
+  </div>
+
+  <div class="rs rs1" hidden><div class="abs tag">FIG. 01 — PROFILE</div><div class="abs dot"></div><div class="abs k key">장민아</div></div>
+  <div class="rs rs2" hidden><div class="abs hd">PROFILE.SPEC / REV 16</div><div class="abs l key" style="top:330px">NAME&nbsp;&nbsp;&nbsp;<b>장민아</b></div><div class="abs l" style="top:440px">ROLE&nbsp;&nbsp;&nbsp;<b>AI·AX 실무교육 강사</b></div><div class="abs l" style="top:550px">FIELD&nbsp;&nbsp;<b>디지털 마케팅 16년</b></div><div class="abs l" style="top:660px">MODE&nbsp;&nbsp;&nbsp;<b>현장 → 교육</b></div></div>
+  <div class="rs rs3" hidden><div class="abs k key">16</div><div class="abs u">년의 현장</div></div>
+  <div class="rs rs4" hidden><img src="photo.jpg" alt=""><div class="abs k key">현장을 알고,<br>배움을 설계합니다.</div></div>
+  <div class="rs rs5" hidden><div class="abs c key"></div><div class="abs sq"></div><div class="abs tr"></div><div class="abs k">장민아</div></div>
+  <div class="rs rs6" hidden data-sel="white"><div class="abs l key" style="top:250px">$ whoami</div><div class="abs l" style="top:345px">장민아 · AI·AX 실무교육 강사</div><div class="abs l dim" style="top:500px">$ cat career.log</div><div class="abs l" style="top:595px">검색광고 → 커머스 → 이커머스 → AI</div><div class="abs l" style="top:750px">$ _</div></div>
+  <div class="rs rs7" hidden data-sel="white"><div class="abs k key">“강의장을 나설 때,<br>내일 당장 써먹을 것<br>하나는 챙겨 가시도록.”</div><div class="abs by">— JANGWORKS 수업 원칙</div></div>
+  <div class="rs rs8" hidden><div class="abs st key" style="left:180px;top:170px;transform:rotate(-8deg)">AI</div><div class="abs st dk" style="left:1340px;top:190px;transform:rotate(6deg)">AX</div><div class="abs k">장민아</div><div class="abs st dk" style="left:240px;top:760px;transform:rotate(5deg)">바이브 코딩</div><div class="abs st" style="left:1150px;top:770px;transform:rotate(-5deg)">AI 에이전트</div></div>
+  <div class="rs rs9" hidden><div class="abs k key">장 민 아</div><div class="abs ln"></div></div>
+  <div class="rs rs10" hidden><img src="emblem.png" alt="JANGWORKS 엠블럼"><div class="abs mono">JANGWORKS · AI · AUTOMATION · GROWTH</div><div class="abs k key">장민아</div><div class="abs r">AI·AX 실무교육 &amp; 비즈니스 혁신 파트너</div><div class="abs rule"></div><div class="abs q">조직이 AI를 실제 업무에 쓰게 만드는 교육.<br>16년 디지털 마케팅 현장에서 시작합니다.</div></div>
+
+  <div class="selbox" id="sel"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><b></b></div>
+</section>
+
+<!-- 02 galaxy -->
+<section class="scene space" id="s-galaxy" data-beat="0" hidden aria-label="은하에서 등장">
+  <div class="abs g-enter">ENTERING · JANGWORKS GALAXY</div>
+  <div class="abs g-copy">
+    <div class="eyebrow">AI · AX CORPORATE EDUCATION</div>
+    <h2 class="h">AI 기업교육의
+다음 궤도로.</h2>
+    <p>16년 디지털 마케팅 현장에서 출발해,<br>조직이 AI로 일하는 방식을 설계합니다.</p>
+    <div class="g-name">장민아<span>JANGWORKS · 대표 강사</span></div>
+  </div>
+</section>
+
+<!-- 02 before -->
+<section class="scene space" id="s-before" data-beat="0" hidden aria-label="경력">
+  <div class="abs eyebrow fade-up">BEFORE · 2009 — 2025</div>
+  <h2 class="abs h fade-up">디지털의 모든 시대를,
+현장 한복판에서 통과했습니다.</h2>
+  <div class="abs tl-line"></div>
+  <div id="nodes"></div>
+  <div class="abs brands" id="brands"></div>
+</section>
+
+<!-- 03 numbers -->
+<section class="scene space" id="s-numbers" data-beat="0" hidden aria-label="숫자로 보는 경력">
+  <div class="abs eyebrow fade-up">AT A GLANCE · 숫자로 보면</div>
+  <div id="nums"></div>
+  <ol class="abs nlist" id="nlist"></ol>
+</section>
+
+<!-- 04 language -->
+<section class="scene space" id="s-language" data-beat="0" hidden aria-label="현업의 언어">
+  <div class="abs eyebrow fade-up">WHY JANG · 왜 장민아인가</div>
+  <h2 class="abs h fade-up">개발자의 말이 아니라,
+듣는 사람의 업무 언어로.</h2>
+  <div id="lrows"></div>
+</section>
+
+<!-- 05 now -->
+<section class="scene space" id="s-now" data-beat="0" hidden aria-label="최근 강의">
+  <div class="abs eyebrow fade-up">NOW · AI 실무설계 강사</div>
+  <div class="abs swap"><h2 class="h h1">2026년, 이런 자리에서 만났습니다.</h2><h2 class="h h2">C레벨부터 주니어까지.</h2></div>
+  <div id="colhs"></div>
+  <div id="tiles"></div>
+</section>
+
+<!-- films -->
+<section class="scene space" id="s-films" data-beat="0" hidden aria-label="영상 강의">
+  <div class="abs eyebrow fade-up">FILMS · 영상 콘텐츠와 강의</div>
+  <h2 class="abs h fade-up">AI로 영상을 만들고,
+강의도 영상으로 남깁니다.</h2>
+  <ol class="abs flist fade-up">
+    <li><span class="no">01</span><span class="t">AX 리터러시와 조직 방향성 1·2부</span><span class="m">조직 단위 AX 방향 설정</span></li>
+    <li><span class="no">02</span><span class="t">영업·마케팅 AI 워크플로우 1·2부</span><span class="m">G밸리 인재키움 · 온라인 120명 참여</span></li>
+    <li><span class="no">03</span><span class="t">SNS 마케팅 AI 2부</span><span class="m">퍼시픽링스 · 집체 교육 + 전국 지부 온라인 동시 참여</span></li>
+    <li><span class="no">04</span><span class="t">AI 마케팅 비즈니스 활용능력</span><span class="m">NET 세미나 · 집체 + 유튜브 라이브</span></li>
+    <li><span class="no">05</span><span class="t">업무 워크플로우 AX 전환 실습</span><span class="m">공공재단 · 현장 집체</span></li>
+  </ol>
+  <div class="abs screen">
+    <div class="cap">AI 영상 콘텐츠 · BACK ALLEY GALAXY EP.01</div>
+    <video id="lv" src="lecture.mp4" poster="lecture-poster.jpg" muted loop playsinline preload="metadata"></video>
+    <button type="button" class="snd" id="lvSnd">소리 켜기</button>
+  </div>
+</section>
+
+<!-- tower -->
+<section class="scene space" id="s-tower" data-beat="0" hidden aria-label="슬라이드 강의">
+  <div class="abs eyebrow fade-up">SLIDE LECTURES · 슬라이드 강의</div>
+  <div class="abs t-count"><b id="tCount">0</b><small>장의 교안</small></div>
+  <p class="abs t-sub">대상과 목적마다 새로 쓰는 슬라이드.<br>대표 교안 6개 과정이 하늘로 쌓여 올라갑니다.</p>
+  <div class="abs t-list">
+    <h2 class="h">같은 교안은 없습니다.
+대상마다 새로 쌓습니다.</h2>
+    <ol>
+      <li><span class="no">01</span><span class="t">AI와 함께 만드는 신사업 사업계획서</span><span class="m">중소·벤처 대표 · 7차시</span></li>
+      <li><span class="no">02</span><span class="t">고객이 먼저 찾아오는 영업세일즈의 콘텐츠 전략</span><span class="m">영업 조직 · 1차시 특강</span></li>
+      <li><span class="no">03</span><span class="t">AI를 활용한 공문서 작성 원데이 클래스</span><span class="m">고위공무원 · 1일 6차시</span></li>
+      <li><span class="no">04</span><span class="t">생성형 AI로 설계하는 워크플로우 원데이 클래스</span><span class="m">중소기업 특정 직무 · 1일 6차시</span></li>
+      <li><span class="no">05</span><span class="t">대기업 마케팅, AI로 앞서가기</span><span class="m">대학 졸업예정자 직무특강 · 3차시 온라인</span></li>
+      <li><span class="no">06</span><span class="t">ChatGPT 업무 자동화 AX 전환교육</span><span class="m">공공재단 실무자 · AX 해커톤 방식 2일</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 06 ladder -->
+<section class="scene space" id="s-ladder" data-beat="0" hidden aria-label="교육 단계">
+  <div class="abs eyebrow fade-up">CURRICULUM · 무엇을 배우나요</div>
+  <h2 class="abs h fade-up">아는 것이 아니라 쓰는 것.
+기초부터 에이전트까지.</h2>
+  <p class="abs lcap">입문만 할 수도, 에이전트까지 끝까지 갈 수도 있습니다.<br>대상의 수준과 목적에 맞춰 계단의 높이와 순서를 다시 놓습니다.</p>
+  <div id="steps"></div>
+  <div class="abs walker" id="walker"></div>
+</section>
+
+<!-- 07 process -->
+<section class="scene space" id="s-process" data-beat="0" hidden aria-label="교육 설계 과정">
+  <div class="abs eyebrow fade-up">PROCESS · 교육 설계</div>
+  <h2 class="abs h fade-up">강의 시간을 파는 것이 아니라,
+조직의 행동 변화를 설계합니다.</h2>
+  <div class="abs pline"></div>
+  <div id="pnodes"></div>
+  <div class="abs tools-lab">수업 안에서 쓰는 도구</div>
+  <div class="abs tools">
+    <a class="tool" href="https://jangworks-ai-agora.minsalisa2826.chatgpt.site/" target="_blank" rel="noopener noreferrer"><div class="t">AI Agora</div><div class="d">수강생 동시참여 페이지<br>채팅 · 교안 · 퀴즈 · 양방향 피드백</div><div class="go">열어 보기 ↗</div></a>
+    <a class="tool" href="https://jangworks-ai-recruit.minsalisa2826.chatgpt.site/" target="_blank" rel="noopener noreferrer"><div class="t">AI 신입사원 온보딩 게임</div><div class="d">실습을 마무리하는 게임<br>배운 내용을 직접 써 보는 시간</div><div class="go">열어 보기 ↗</div></a>
+    <a class="tool" href="https://t.ly/A94Pl" target="_blank" rel="noopener noreferrer"><div class="t">수강생 노션 가이드</div><div class="d">실습을 따라가는 안내서<br>수업 후에도 다시 펼쳐 보는 자료</div><div class="go">열어 보기 ↗</div></a>
+  </div>
+</section>
+
+<!-- 08 credentials -->
+<section class="scene space" id="s-credentials" data-beat="0" hidden aria-label="자격">
+  <div class="abs eyebrow fade-up">CREDENTIALS · 자격과 신뢰</div>
+  <h2 class="abs h fade-up">검증된 자격과
+강의 권한.</h2>
+  <p class="abs cred-sub fade-up">16년 실무, 누적 교육 200회 이상.<br>대기업·커머스 현장 교육, 사내·신입 교육, 공공기관과 국비 과정까지 강의합니다.</p>
+  <div id="stamps"></div>
+</section>
+
+<!-- 09 contact -->
+<section class="scene space" id="s-contact" data-beat="0" hidden aria-label="문의">
+  <img class="abs photo" src="photo.jpg" alt="장민아 강사 프로필 사진">
+  <div class="abs brand">JANGWORKS</div>
+  <h2 class="abs h">다음 수업,
+함께 만들어 볼까요.</h2>
+  <p class="abs c-sub">대상·인원·시간만 알려주시면 목적에 맞는 커리큘럼을 제안드립니다.<br>특강부터 정규 과정, 기업 맞춤 워크숍, 국비지원 과정까지 운영합니다.</p>
+  <div class="abs c-btns">
+    <a class="cbtn pri" href="https://naver.me/5WUApXGS" target="_blank" rel="noopener noreferrer">교육 의뢰하기 ↗</a>
+    <a class="cbtn" href="https://pf.kakao.com/_GuCxfX" target="_blank" rel="noopener noreferrer">카카오 채널 ↗</a>
+    <a class="cbtn" href="https://blog.naver.com/jangworks" target="_blank" rel="noopener noreferrer">네이버 블로그 ↗</a>
+    <a class="cbtn" href="https://minalisa2826.github.io/jang-works/" target="_blank" rel="noopener noreferrer">홈페이지 ↗</a>
+  </div>
+  <div class="abs c-lines">
+    <div class="c-line"><span class="lab">EMAIL</span><span>jangworksbiz@gmail.com</span><button class="copy" type="button" data-copy="jangworksbiz@gmail.com">복사</button></div>
+    <div class="c-line"><span class="lab">TEL</span><span>010-9570-2826</span><button class="copy" type="button" data-copy="010-9570-2826">복사</button></div>
+  </div>
+</section>
+
+</div>
+</div>
+
+<div id="ui">
+  <div class="nav"><button type="button" id="bAuto" aria-label="자동 넘김 멈추기">❚❚</button><button type="button" id="bPrev" aria-label="이전">‹</button><button type="button" id="bNext" aria-label="다음">›</button><button type="button" id="bOver" aria-label="전체 장면 보기">▦</button><button type="button" id="bHelp" aria-label="단축키 도움말">?</button><button type="button" id="bSnd" aria-label="효과음 끄기">♪</button></div>
+  <div class="hud" id="hud" aria-live="polite"></div>
+  <div class="panel notes" id="notes" hidden><p id="notesText"></p><span class="meta" id="notesMeta"></span></div>
+  <div class="panel over" id="over" hidden></div>
+  <div class="panel help" id="help" hidden>
+    <b>P</b><span>자동 넘김 멈춤·재생</span><b>→ · Space · 클릭</b><span>다음</span><b>← · 화면 왼쪽 클릭</b><span>이전</span><b>O</b><span>전체 장면</span><b>N</b><span>발표자 노트</span><b>F</b><span>전체 화면</span><b>1–9</b><span>장면 바로 가기</span><b>M</b><span>효과음 켜기·끄기</span><b>Esc</b><span>닫기</span>
+  </div>
+  <div class="panel toast" id="toast" hidden></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+'use strict';
+const $=s=>document.querySelector(s);
+const stage=$('#stage');
+let S=1;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const W3={on:false,setScene(){},sfx(){}};
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const lin=(a,b,t)=>clamp((t-a)/(b-a));
+function fit(){S=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform=`translate(-50%,-50%) scale(${S})`}
+addEventListener('resize',fit);fit();
+
+/* ---------- 장면 내용 ---------- */
+const eras=[
+ ['2009–2012','검색광고 시대','NHN 네이버\n검색마케터 AE','지역광고 오픈멤버. 병의원·숙박 광고주 제안과 운영, 신입 교육'],
+ ['2014–2020','커머스·모바일 시대','리서치애드 · 11번가\n채널광고팀 BP 팀장','월 최대 30억 예산, 40개 제휴·제작사 총괄'],
+ ['2020–2023','이커머스 운영 시대','비지글로벌\n부장','쿠팡·컬리 입점, 발주–정산–재고–손익 시스템 구축'],
+ ['2023–2024','사업화 시대','바라스페이스\nGM','MVP 서비스 구현, 공공기관 연계 유치'],
+ ['2026–','AI 전환 시대','AI 실무설계 강사\nJANGWORKS','16년 현장 위에 AI를 얹어 일하는 방식을 가르칩니다']];
+$('#nodes').innerHTML=eras.map((e,i)=>`<div class="abs node${i===4?' now':''}" style="left:${150+i*350}px;top:488px;transition-delay:${.5+i*.22}s"><div class="yr">${e[0]}</div><div class="era">${e[1]}</div><div class="pt"></div><div class="co">${e[2].replace('\n','<br>')}</div><div class="ds">${e[3]}</div></div>`).join('');
+$('#brands').innerHTML='<span class="lab">함께 일한 브랜드</span>'+['삼성전자','LG전자','P&amp;G','아모레퍼시픽','로레알','신한카드','11번가','쿠팡','컬리','네이버'].map((b,i)=>`<span style="transition-delay:${i*.05}s">${b}</span>`).join('');
+
+const nums=[[16,'년','디지털 마케팅 실무','검색광고에서 AI까지, 현장에서 일한 시간'],[200,'회+','기업·기관 누적 교육','임원진부터 주니어까지'],[30,'억','월 최대 광고 예산 운영','11번가 채널광고팀 BP 팀장 시절, 직접 운영한 규모'],[40,'개사','제휴·제작사 총괄','DA·SA·Paid 채널을 한 팀에서 운영'],[4,'직종','NCS 확인강사','정보기술전략 · 인공지능 · 마케팅 · 홍보광고']];
+$('#nums').innerHTML=nums.map(n=>`<div class="abs num"><div class="big"><span class="n" data-n="${n[0]}">${n[0]}</span><span class="u">${n[1]}</span></div><div class="lb">${n[2]}</div><div class="sb">${n[3]}</div></div>`).join('');
+$('#nlist').innerHTML=nums.map(n=>`<li>${n[0]}${n[1]}<b>${n[2]}</b></li>`).join('');
+
+const lang=[['LLM 프롬프트 엔지니어링','일 잘하는 업무 지시서 쓰기'],['API 연동 자동화','엑셀에서 메일까지 손 안 대고'],['RAG 파이프라인','사내 문서를 찾아 답하는 비서'],['멀티 에이전트 오케스트레이션','반복 업무를 나눠 맡는 AI 팀원'],['바이브 코딩','말로 만드는 우리 팀 업무 도구']];
+$('#lrows').innerHTML=lang.map((r,i)=>{const d=i*.85;return `<div class="abs lrow" style="top:${400+i*118}px"><span class="j" style="transition-delay:${d}s">${r[0]}<span class="strike" style="transition-delay:${d}s"></span></span><span class="ar" style="transition-delay:${d+.3}s">→</span><span class="p" style="transition-delay:${d+.35}s">${r[1]}</span></div>`}).join('');
+
+const orgs=[ // [기관, 주제, 분야, 대상 0=의사결정자 1=실무자·조직 2=학생·시민]
+ ['대구시청','고위 공무원 AX 공문서 자동화','PUBLIC',0],['유진그룹 · 웰컴저축은행','회장·임원진 전담 기술강사','FINANCE',0],['중소기업·벤처 대표','AI 사업기획, 공공입찰 역량','BUSINESS',0],
+ ['파주시 청소년재단','실무자 AX 업무자동화 코칭','PUBLIC',1],['중소기업 인재키움','G밸리·배달플랫폼 등 AX 실무','BUSINESS',1],['퍼시픽링스 영업조직','전국 AI 세일즈·콘텐츠 마케팅','SALES',1],['K뷰티 기업','힉스필드 AI 영상 마케팅','BRAND',1],['국립민속박물관','전사 AI 실무활용·보안 리터러시','PUBLIC',1],['제조사·대기업','바이브 코딩 기술강사','ENTERPRISE',1],['아임웹 · 비쥬얼랩','2026 NET 세미나 마케팅 연사','SEMINAR',1],
+ ['상명대학교','AX 시대의 마케팅 직무특강','CAMPUS',2],['멀티캠퍼스 AI,M 부트캠프','PM 양성 · MVP 프로젝트','BOOTCAMP',2],['서울50플러스','중장년 AI 영상·리터러시','CITIZEN',2],['용산시립도서관','생성형 AI 리터러시 특강','CITIZEN',2],['서울·경기 특성화고','AX 마케팅 체험 캠프','SCHOOL',2]];
+const tilesEl=$('#tiles');
+tilesEl.innerHTML=orgs.map(o=>`<div class="tile"><div class="sec">${o[2]}</div><div class="org">${o[0]}</div><div class="tp">${o[1]}</div></div>`).join('');
+const colNames=[['의사결정자','C레벨 · 임원 · 대표'],['실무자 · 조직','공공 · 기업 · 영업'],['예비 직장인 · 시민','대학 · 부트캠프 · 중장년']];
+$('#colhs').innerHTML=colNames.map((c,i)=>`<div class="abs colh" style="left:${120+i*570}px">${c[0]}<small>${c[1]}</small></div>`).join('');
+function layoutNow(b){
+  const tiles=[...tilesEl.children],cnt=[0,0,0];
+  tiles.forEach((t,i)=>{let x,y,w,h;
+    if(!b){const c=i%5,r=Math.floor(i/5);w=320;h=176;x=120+c*340;y=330+r*196}
+    else{const col=orgs[i][3],k=cnt[col]++;w=540;h=74;x=120+col*570;y=386+k*86}
+    Object.assign(t.style,{left:x+'px',top:y+'px',width:w+'px',height:h+'px',transitionDelay:b?`${(i%7)*.03}s`:`${i*.04}s`});
+  });
+}
+layoutNow(0);
+
+const steps=[['01','AI 리터러시','AI 원리 · 도구 비교 · 첫 프롬프트'],['02','문서·데이터 자동화','보고서 · 기안문 · 데이터 시각화'],['03','콘텐츠·이미지·영상','카드뉴스 · 홍보 이미지 · AI 영상'],['04','바이브 코딩','코드 없이 업무 도구와 웹페이지'],['05','AI 에이전트','반복 업무를 맡는 나만의 업무 비서']];
+const stepGeo=steps.map((s,i)=>({x:150+i*330,h:200+i*110}));
+$('#steps').innerHTML=steps.map((s,i)=>`<div class="abs step" style="left:${stepGeo[i].x}px;top:${1000-stepGeo[i].h}px;height:${stepGeo[i].h}px;transition-delay:${.3+i*.14}s"><div class="no">${s[0]}</div><div class="t">${s[1]}</div><div class="tg">${s[2]}</div></div>`).join('');
+const walker=$('#walker');
+const walkPos=i=>i<0?[90,956]:[stepGeo[i].x+128,1000-stepGeo[i].h-48];
+let walkTimers=[];
+function walk(to){walkTimers.forEach(clearTimeout);walkTimers=[];
+  if(to<0||reduce){const p=walkPos(to<0?-1:4);walker.style.left=p[0]+'px';walker.style.top=p[1]+'px';return}
+  for(let i=0;i<=4;i++)walkTimers.push(setTimeout(()=>{const p=walkPos(i);walker.style.left=p[0]+'px';walker.style.top=p[1]+'px';W3.sfx('tick',1+i*.18)},300+i*420));
+}
+walk(-1);
+
+const proc=[['01','사전 진단','담당자 인터뷰로 참여자 직무, 활용 수준, 기대 결과를 확인합니다.'],['02','맞춤 설계','업종별 사례와 직무별 실습, 산출물을 교육 목적에 맞춰 구성합니다.'],['03','참여형 진행','자기 업무와 연결된 결과물을 수업 안에서 직접 완성합니다.'],['04','실행 강화','프롬프트·실습자료·적용 기준을 남겨 현장에서 이어지게 합니다.']];
+$('#pnodes').innerHTML=proc.map((p,i)=>`<div class="abs pn" style="left:${100+i*440}px;top:411px;transition-delay:${.3+i*.3}s"><div class="c">${p[0]}</div><div class="t">${p[1]}</div><div class="d">${p[2]}</div></div>`).join('');
+
+const stamps=[['경희대학교 대학원','언론정보학 전략커뮤니케이션 석사과정 · AI & 데이터 커뮤니케이션 트랙','-1deg',1],['AIBT 1급 · AI-POT 1급','한국생산성본부(KPC)\nAI 활용능력 · 프롬프트','-3deg'],['AICE Basic','KT · 한국경제신문\nAI 활용능력 시험','2deg'],['NCS 확인강사 4직종','정보기술전략 200101 · 인공지능 200107\n마케팅 020103\n홍보광고 020102','-2deg'],['검색광고마케터 1급\n인터넷정보검색사','한국정보통신진흥협회(KAIT)','2.5deg']];
+const stampPos=i=>i===0?[830,170,970,220]:[830+((i-1)%2)*500,420+Math.floor((i-1)/2)*300,470,265];
+$('#stamps').innerHTML=stamps.map((s,i)=>{const p=stampPos(i);return `<div class="abs stamp${s[3]?' wide':''}" style="left:${p[0]}px;top:${p[1]}px;width:${p[2]}px;height:${p[3]}px;--r:${s[2]};animation-delay:${.35+i*.24}s"><div class="t">${s[0].replace('\n','<br>')}</div><div class="d">${s[1].split('\n').join('<br>')}</div></div>`}).join('');
+
+/* ---------- 장면 목록 ---------- */
+const scenes=[
+ {id:'office',title:'지루한 슬라이드',sw:'#ffffff',fg:'#000',beats:3,notes:['안녕하세요, 장민아입니다. 오늘은 제 소개를 하겠습니다.\n(일부러 밋밋하게 말하세요. 슬라이드도 지루하게 둡니다. 잠깐 기다립니다.)','목차는 소개, 경력, 강의 실적, 자격, 문의 순서입니다.\n(항목을 천천히 소리 내어 읽고, 넘긴 다음 말을 멈추세요.)','아무것도 누르지 마세요. 슬라이드가 알아서 고칩니다.\n남색 JANGWORKS 화면이 나오면 다시 말을 시작하세요.']},
+ {id:'galaxy',title:'은하에서 등장',sw:'#05070f',fg:'#fff',beats:2,notes:['(누르지 말고 기다리세요. 고쳐진 슬라이드가 별이 되어 은하로 들어갑니다.)','AI 기업교육의 다음 궤도. 저는 장민아입니다.\n16년 디지털 마케팅 현장에서 출발해, 조직이 AI로 일하는 방식을 설계합니다.']},
+ {id:'before',title:'디지털의 모든 시대',sw:'#05070f',fg:'#fff',beats:2,notes:['검색광고가 막 시작될 때부터 커머스, 이커머스, 스타트업을 거쳐 지금 AI 전환기까지 왔습니다.\n(오른쪽 끝 금색 점을 가리키며 "지금 여기"라고 말하세요.)','삼성전자, P&G, 아모레퍼시픽 같은 브랜드의 캠페인을 직접 운영했습니다.\n그래서 AI를 기술이 아니라 일의 언어로 설명할 수 있습니다.']},
+ {id:'numbers',title:'숫자로 보면',sw:'#05070f',fg:'#fff',beats:5,notes:['16년. 디지털 마케팅 현장에서 일한 시간입니다.','200회 이상. 기업과 기관에서 교육한 횟수입니다.','월 30억. 11번가 시절 직접 운영한 광고 예산 규모입니다.','40개사. 함께 일한 제휴사와 제작사입니다.','NCS 4개 직종 확인강사. 국비 과정까지 강의할 수 있습니다.']},
+ {id:'language',title:'현업의 언어로',sw:'#05070f',fg:'#fff',beats:2,notes:['교육 현장에서 이런 말을 들으면 다들 고개를 숙입니다.\n(왼쪽 용어를 하나씩 읽어 주세요.)','저는 이렇게 바꿔 말합니다. 듣는 사람의 업무 언어로요.\n(오른쪽 문장이 다 나올 때까지 기다리세요.)']},
+ {id:'now',title:'올해 만난 자리',sw:'#05070f',fg:'#fff',beats:2,notes:['올해 만난 기관과 기업입니다. 공공, 금융, 영업, 브랜드, 학교까지 있습니다.','대상별로 다시 놓으면 이렇습니다. 같은 교안은 없습니다.\n학습자의 경험과 숙련도에 맞춰 언어, 속도, 사례를 바꿉니다.']},
+ {id:'films',title:'영상 콘텐츠와 강의',sw:'#05070f',fg:'#fff',beats:1,notes:['AI로 영상 콘텐츠를 직접 만들고, 강의도 영상으로 남깁니다.\n집체 교육, 전국 지부 온라인, 유튜브 라이브까지 진행했습니다. (소리 켜기 버튼으로 영상 소리를 들려줄 수 있습니다.)']},
+ {id:'tower',title:'하늘로 쌓이는 교안',sw:'#05070f',fg:'#fff',beats:2,notes:['대상마다 교안을 새로 씁니다. 대표 교안 6개 과정의 슬라이드가 지금 쌓이고 있습니다.\n(쌓이는 동안 말을 멈추세요.)','신사업 사업계획서, 영업 콘텐츠, 공문서, 워크플로우, 대기업 마케팅, AX 전환교육까지. 같은 교안은 없습니다.']},
+ {id:'ladder',title:'기초부터 에이전트까지',sw:'#05070f',fg:'#fff',beats:2,notes:['AI 리터러시에서 시작해 문서·데이터 자동화, 콘텐츠, 바이브 코딩, AI 에이전트까지 이어지는 다섯 단계입니다.','입문만 하는 조직도 있고, 에이전트까지 가는 조직도 있습니다.\n대상에 맞춰 계단을 다시 놓습니다.']},
+ {id:'process',title:'교육 설계 과정',sw:'#05070f',fg:'#fff',beats:2,notes:['교육 전에 진단하고, 맞춤 설계하고, 참여형으로 진행하고, 끝난 뒤에도 이어지게 합니다.','수업에서는 직접 만든 도구를 씁니다. 동시참여 페이지, 온보딩 게임, 노션 가이드입니다.\n(링크를 열어 실제 화면을 보여 줘도 좋습니다.)']},
+ {id:'credentials',title:'자격과 신뢰',sw:'#05070f',fg:'#fff',beats:1,notes:['지금은 경희대 대학원에서 AI와 조직 커뮤니케이션을 공부하고 있습니다.\n그리고 AIBT·AI-POT, AICE Basic 같은 AI 자격과 NCS 확인강사, 검색광고 자격을 갖고 있습니다.']},
+ {id:'contact',title:'다음 수업',sw:'#05070f',fg:'#fff',beats:1,notes:['대상과 인원, 시간만 알려 주시면 커리큘럼을 제안드립니다. 감사합니다.']}];
+scenes.forEach(s=>s.el=$('#s-'+s.id));
+
+/* ---------- 장면 전환 효과 ---------- */
+try{CSS.registerProperty({name:'--bl',syntax:'<length>',inherits:false,initialValue:'0px'})}catch(e){}
+const KINDS={
+ circle:[{clipPath:'circle(0% at 72% 62%)'},{clipPath:'circle(150% at 72% 62%)'}],
+ diag:[{clipPath:'polygon(0% 0%, 0% 0%, -30% 100%, 0% 100%)'},{clipPath:'polygon(0% 0%, 130% 0%, 100% 100%, 0% 100%)'}],
+ up:[{clipPath:'inset(100% 0% 0% 0%)'},{clipPath:'inset(0% 0% 0% 0%)'}],
+ split:[{clipPath:'inset(0% 50% 0% 50%)'},{clipPath:'inset(0% 0% 0% 0%)'}],
+ iris:[{clipPath:'inset(46% 46% 46% 46% round 80px)'},{clipPath:'inset(0% 0% 0% 0% round 0px)'}],
+ left:[{clipPath:'inset(0% 100% 0% 0%)'},{clipPath:'inset(0% 0% 0% 0%)'}],
+ corner:[{clipPath:'circle(0% at 0% 0%)'},{clipPath:'circle(160% at 0% 0%)'}]};
+const kindOrder=['circle','blinds','diag','iris','split','up','corner','left'];
+function reveal(el,kind,dur){
+  if(reduce||dur<=0)return Promise.resolve();
+  let a;
+  if(kind==='blinds'){
+    const m='repeating-linear-gradient(to bottom,#000 0 var(--bl),transparent var(--bl) 108px)';
+    el.style.webkitMaskImage=m;el.style.maskImage=m;
+    try{a=el.animate([{'--bl':'0px'},{'--bl':'108px'}],{duration:dur*1000,easing:'cubic-bezier(.6,0,.3,1)'})}catch(e){}
+    if(!a||!CSS.registerProperty){el.style.maskImage=el.style.webkitMaskImage='';a=el.animate(KINDS.up,{duration:dur*1000,easing:'cubic-bezier(.7,0,.2,1)'})}
+    return a.finished.catch(()=>{}).then(()=>{el.style.maskImage=el.style.webkitMaskImage=''});
+  }
+  a=el.animate(KINDS[kind]||KINDS.up,{duration:dur*1000,easing:'cubic-bezier(.7,0,.2,1)'});
+  return a.finished.catch(()=>{});
+}
+
+/* ---------- office 자동 연출 ---------- */
+const To=[.85,.7,.6,.55,.5,.45,.45,.5,.6,1.1],T0=9.1,co=[T0];To.forEach(d=>co.push(co[co.length-1]+d));
+const END=co[co.length-1];
+const office=scenes[0].el,agText=$('#agText'),caret=$('#caret'),agItems=[...$('#agList').children],clip=$('#clip'),sel=$('#sel'),layers=[...office.querySelectorAll('.rs')];
+const layerKinds=['circle','blinds','diag','iris','split','up','corner','left','blinds','circle'];
+let oStart=0,oRAF=0,oFired=new Set(),lastPh=0;
+function typed(t){const sl=(s,a,q)=>s.slice(0,Math.max(0,Math.floor((t-a)*q)));
+  const A='목차',B='이 슬라이드, 지루하죠.',C='제가 고쳐볼게요.';
+  if(t<1.9)return A;if(t<2.5)return A.slice(0,Math.max(0,2-Math.floor((t-1.9)*8)));
+  if(t<7.4)return sl(B,2.5,17);if(t<8)return B.slice(0,Math.max(0,B.length-Math.floor((t-7.4)*34)));return sl(C,8,20)}
+function relRect(el){const r=el.getBoundingClientRect(),s=office.getBoundingClientRect();return[(r.left-s.left)/S,(r.top-s.top)/S,r.width/S,r.height/S]}
+function setSel(r,pad,show,white){if(!show){sel.style.opacity=0;return}
+  sel.style.opacity=1;sel.classList.toggle('white',!!white);
+  Object.assign(sel.style,{left:r[0]-pad+'px',top:r[1]-pad+'px',width:r[2]+pad*2+'px',height:r[3]+pad*2+'px'})}
+function officeRender(t,instant){
+  const txt=typed(t);if(agText.textContent!==txt){if(!instant&&txt.length!==agText.textContent.length)W3.sfx('type');agText.textContent=txt}
+  caret.classList.toggle('on',(t>1.9&&t<4.4)||(t>7.4&&t<9));
+  agItems.forEach((li,i)=>li.classList.toggle('gone',t>5.35+i*.13));
+  clip.classList.toggle('flat',t>6.15);
+  let target=null,pad=14,white=false;
+  if(t>.85&&t<4.7)target=relRect(agText.parentElement);
+  else if(t>=4.75&&t<5.55)target=relRect($('#agList'));
+  else if(t>=5.6&&t<7.25)target=relRect(clip);
+  else if(t>=7.28&&t<T0)target=relRect(agText.parentElement);
+  layers.forEach((L,i)=>{const on=t>=co[i];
+    if(on&&L.hidden){L.hidden=false;L.style.zIndex=10+i;if(!instant&&!oFired.has(i)){oFired.add(i);W3.sfx(i===9?'shimmer':'pop',1+i*.06);reveal(L,layerKinds[i],Math.min(.62,To[i]*.46))}}
+    if(!on&&!L.hidden)L.hidden=true});
+  if(t>=T0&&t<END-1.1){let i=0;while(i<9&&t>=co[i+1])i++;const L=layers[i];
+    const r=relRect(L.querySelector('.key'));const j=reduce?0:Math.sin(t*7)*3;target=[r[0]-j,r[1]-j,r[2]+j*2,r[3]+j*2];white=L.dataset.sel==='white'}
+  if(target&&target[2]<300&&t<T0&&t>.85&&t<4.7)target[2]=Math.max(300,target[2]);
+  const ph=!target?0:t<T0?(t<4.7?1:t<5.55?2:t<7.25?3:4):99;if(!instant&&ph&&ph!==99&&ph!==lastPh)W3.sfx('select');lastPh=ph;
+  setSel(target||[0,0,0,0],pad,!!target,white);
+}
+/* 멈춰 있는 구간을 압축해 끊김 없이 이어지게 한다: [대본 시작, 대본 끝, 실제 길이] */
+const GAPS=[[.9,1.85,.25],[3.3,4.7,.25],[6.7,7.25,.2],[8.5,9.05,.2]];
+function warpT(r){let shift=0;for(const [a,b,n] of GAPS){const ra=a-shift;if(r<ra)return r+shift;if(r<ra+n)return a+(r-ra)/n*(b-a);shift+=(b-a)-n}return r+shift}
+function officeTick(now){const t=warpT((now-oStart)/1000);officeRender(t);if(t<END+.2)oRAF=requestAnimationFrame(officeTick)}
+function officeStart(){cancelAnimationFrame(oRAF);oFired.clear();layers.forEach(L=>L.hidden=true);oStart=performance.now()-800;if(reduce){officeRender(END+1,true);return}oRAF=requestAnimationFrame(officeTick)}
+function officeReset(){cancelAnimationFrame(oRAF);oStart=0;oFired.clear();officeRender(0,true);layers.forEach(L=>L.hidden=true);sel.style.opacity=0}
+function officeFinish(){cancelAnimationFrame(oRAF);oStart=performance.now()-(END+1)*1000;officeRender(END+1,true)}
+const officeRunning=()=>oStart&&warpT((performance.now()-oStart)/1000)<END;
+
+/* ---------- 숫자 ---------- */
+let countTimer=0;
+function showNum(b){const items=[...document.querySelectorAll('#nums .num')],li=[...$('#nlist').children];
+  items.forEach((el,i)=>{el.classList.toggle('cur',i===b);el.classList.toggle('past',i<b)});li.forEach((el,i)=>el.classList.toggle('cur',i===b));
+  const n=items[b].querySelector('.n'),target=+n.dataset.n;cancelAnimationFrame(countTimer);
+  if(reduce){n.textContent=target;return}const t0=performance.now();
+  const f=now=>{const k=clamp((now-t0)/900);n.textContent=Math.round(target*(1-Math.pow(1-k,3)));if(k<1)countTimer=requestAnimationFrame(f)};countTimer=requestAnimationFrame(f)}
+
+/* ---------- 진행 ---------- */
+let cur=0,beat=0,transN=0;
+/* ---------- 자동 넘김: 모션이 끝나고 읽을 시간이 지나면 다음 장으로 ---------- */
+const AUTO={on:true,t:0};
+const DWELL={office:[.5,1,d=>d<0?1:.5],galaxy:[()=>W3.on?0:3,9],before:[6,6],numbers:[3.5,3.5,3.5,3.5,4],language:[3.5,7.5],now:[7,7],films:[14],tower:[()=>W3.on?0:4,10],ladder:[5,7],process:[6,9],credentials:[9],contact:[0]};
+function schedAuto(s,b,dir){clearTimeout(AUTO.t);if(!AUTO.on)return;let d=(DWELL[s.id]||[])[b];if(typeof d==='function')d=d(dir);if(!d)return;
+  AUTO.t=setTimeout(function tick(){if(!AUTO.on)return;if(document.hidden||!over.hidden||!help.hidden||(scenes[cur].id==='office'&&beat===2&&officeRunning())){AUTO.t=setTimeout(tick,800);return}nextStep()},d*1000)}
+function setAuto(v){AUTO.on=v;const b=document.getElementById('bAuto');if(b){b.textContent=v?'❚❚':'▶';b.setAttribute('aria-label',v?'자동 넘김 멈추기':'자동 넘김 켜기')}
+  if(v){say('자동 넘김을 다시 켰습니다');schedAuto(scenes[cur],beat,1)}else{clearTimeout(AUTO.t);say('자동 넘김을 멈췄습니다 · P를 누르면 다시 켜집니다')}}
+function applyBeat(s,b,dir){s.el.dataset.beat=b;
+  const lv=document.getElementById('lv');if(lv){if(s.id==='films'){const pr=lv.play();if(pr)pr.catch(()=>{})}else lv.pause()}
+  W3.setScene(s,b,dir);
+  schedAuto(s,b,dir);
+  if(s.id==='office'){if(b<2)officeReset();else if(dir>=0)officeStart();else officeFinish()}
+  if(s.id==='numbers')showNum(b);
+  if(s.id==='now')layoutNow(b);
+  if(s.id==='ladder')walk(b?4:-1);
+  updateUI()}
+function go(i,b,dir){i=clamp(i,0,scenes.length-1);const prev=scenes[cur],next=scenes[i];
+  if(i!==cur){
+    scenes.forEach(s=>{if(s!==prev&&s!==next){s.el.hidden=true;s.el.classList.remove('on');s.el.getAnimations().forEach(a=>a.cancel())}});
+    prev.el.getAnimations().forEach(a=>a.cancel());next.el.getAnimations().forEach(a=>a.cancel());
+    next.el.hidden=false;next.el.classList.remove('on');next.el.style.zIndex=2;prev.el.style.zIndex=1;
+    if(prev.id==='office')cancelAnimationFrame(oRAF);
+    void next.el.offsetWidth;next.el.classList.add('on');
+    const my=++transN;let done;
+    if(W3.on){
+      const shrink=prev.id==='office'&&dir>=0;
+      const out=prev.el.animate(shrink?[{transform:'scale(1)',opacity:1,borderRadius:'0px'},{transform:'scale(.6)',opacity:1,borderRadius:'40px',offset:.45},{transform:'scale(.004)',opacity:0,borderRadius:'50%'}]:[{opacity:1},{opacity:0}],{duration:shrink?1500:420,easing:'cubic-bezier(.7,0,.25,1)',fill:'forwards'});
+      next.el.animate([{opacity:0},{opacity:1}],{duration:700,delay:shrink?900:260,easing:'ease-out',fill:'backwards'});
+      W3.sfx(shrink?'warp':'whoosh');
+      done=out.finished.catch(()=>{});
+    }else done=reveal(next.el,dir>=0?kindOrder[i%kindOrder.length]:'left',.75);
+    done.then(()=>{if(my===transN&&prev!==next){prev.el.hidden=true;prev.el.classList.remove('on');prev.el.getAnimations().forEach(a=>a.cancel())}});
+    cur=i;
+  }
+  beat=clamp(b,0,next.beats-1);applyBeat(next,beat,dir);
+}
+function nextStep(){const s=scenes[cur];if(s.id==='office'&&beat===2&&officeRunning()){officeFinish();return}
+  if(beat<s.beats-1)go(cur,beat+1,1);else if(cur<scenes.length-1)go(cur+1,0,1)}
+function prevStep(){if(beat>0)go(cur,beat-1,-1);else if(cur>0)go(cur-1,scenes[cur-1].beats-1,-1)}
+
+/* ---------- 화면 장치 ---------- */
+const hud=$('#hud'),notes=$('#notes'),over=$('#over'),help=$('#help'),toast=$('#toast');
+function updateUI(){const s=scenes[cur];hud.textContent=`${cur+1} / ${scenes.length}`;hud.style.color=s.fg==='#fff'?'rgba(255,255,255,.6)':'rgba(20,22,28,.5)';
+  $('#notesText').textContent=s.notes[Math.min(beat,s.notes.length-1)];$('#notesMeta').textContent=`${s.title} · ${beat+1}/${s.beats}`;
+  over.querySelectorAll('button').forEach((b,i)=>b.setAttribute('aria-current',String(i===cur)))}
+over.innerHTML='<h2>전체 장면</h2>'+scenes.map((s,i)=>`<button type="button" data-i="${i}"><div class="th" style="background:${s.sw};color:${s.fg};${s.sw==='#ffffff'||s.sw==='#fbfbfa'||s.sw==='#f7f7f5'?'box-shadow:inset 0 0 0 1px #3a3f4a':''}">${s.title}</div><span>${i+1} · #${s.id}</span></button>`).join('');
+over.addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(b){over.hidden=true;go(+b.dataset.i,0,1)}});
+let toastT=0;function say(m,ms=3200){toast.textContent=m;toast.hidden=false;toast.style.opacity=1;clearTimeout(toastT);toastT=setTimeout(()=>{toast.style.opacity=0;setTimeout(()=>toast.hidden=true,500)},ms)}
+function toggle(el){el.hidden=!el.hidden}
+function closeAll(){over.hidden=help.hidden=true}
+function fullscreen(){const d=document;try{if(d.fullscreenElement)d.exitFullscreen();else d.documentElement.requestFullscreen().catch(()=>say('이 화면에서는 전체 화면을 쓸 수 없습니다.'))}catch(e){say('이 화면에서는 전체 화면을 쓸 수 없습니다.')}}
+addEventListener('keydown',e=>{if(e.metaKey||e.ctrlKey||e.altKey)return;const k=e.key;
+  if(['ArrowRight','PageDown',' ','Enter'].includes(k)){if(k==='Enter'&&e.target.closest('a,button'))return;e.preventDefault();closeAll();nextStep()}
+  else if(['ArrowLeft','PageUp','Backspace'].includes(k)){e.preventDefault();closeAll();prevStep()}
+  else if(k==='Home')go(0,0,-1);else if(k==='End')go(scenes.length-1,0,1);
+  else if(k==='o'||k==='O'||k==='g'||k==='G'){toggle(over);help.hidden=true}
+  else if(k==='p'||k==='P')setAuto(!AUTO.on);else if(k==='n'||k==='N')toggle(notes);else if(k==='f'||k==='F')fullscreen();
+  else if(k==='?'||k==='h'||k==='H'){toggle(help);over.hidden=true}
+  else if(k==='Escape')closeAll();
+  else if(/^[1-9]$/.test(k)&&+k<=scenes.length)go(+k-1,0,+k-1>=cur?1:-1)});
+$('#view').addEventListener('click',e=>{if(e.target.closest('a,button'))return;if(!over.hidden||!help.hidden){closeAll();return}
+  (e.clientX<innerWidth*.3?prevStep:nextStep)()});
+$('#bAuto').onclick=e=>{e.stopPropagation();setAuto(!AUTO.on)};$('#bPrev').onclick=prevStep;$('#bNext').onclick=nextStep;$('#bOver').onclick=()=>{toggle(over);help.hidden=true};$('#bHelp').onclick=()=>{toggle(help);over.hidden=true};
+document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const v=b.dataset.copy;
+  const done=()=>{b.textContent='복사됨';setTimeout(()=>b.textContent='복사',1600)};
+  const fallback=()=>{const r=document.createRange();r.selectNodeContents(b.previousElementSibling);const s=getSelection();s.removeAllRanges();s.addRange(r);say('선택했습니다. Ctrl+C로 복사하세요.')};
+  try{navigator.clipboard.writeText(v).then(done,fallback)}catch(err){fallback()}}));
+let idleT=0;function wake(){document.body.classList.remove('idle');clearTimeout(idleT);idleT=setTimeout(()=>document.body.classList.add('idle'),2600)}
+addEventListener('mousemove',wake);addEventListener('touchstart',wake,{passive:true});wake();
+function fromHash(){const id=location.hash.slice(1),i=scenes.findIndex(s=>s.id===id);if(i>=0&&i!==cur)go(i,0,1)}
+
+
+scenes.forEach((s,i)=>{if(i)s.el.hidden=true});
+scenes[0].el.classList.add('on');
+/* 링크를 열면 주소에 장면 이름이 붙어 있어도 항상 1장부터 시작한다 */
+if(location.hash){try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}}
+applyBeat(scenes[0],0,1);
+say(innerHeight>innerWidth?'가로로 돌리면 더 크게 보입니다 · 자동으로 넘어갑니다':'모션이 끝나면 자동으로 넘어갑니다 · P 일시정지 · ← → 직접 이동',4200);
+</script>
+<script>
+/* ===== JANGWORKS 은하 엔진: three.js 우주 배경, 은하, 워프, 초상, 슬라이드 타워, 효과음 ===== */
+(function(){
+'use strict';
+if(reduce||!window.THREE)return;
+const T=THREE,glc=document.getElementById('glc');
+let R;try{R=new T.WebGLRenderer({canvas:glc,antialias:true,powerPreference:'high-performance'})}catch(e){glc.remove();return}
+if(!R.getContext()){glc.remove();return}
+R.setClearColor(0x03050c,1);
+const scene=new T.Scene(),cam=new T.PerspectiveCamera(46,16/9,.1,5000);scene.add(cam);
+const UP=new T.Vector3(0,1,0);
+function px(){return R.domElement.width/1920}
+function size(){const dpr=Math.min(window.devicePixelRatio||1,1.6);const w=Math.min(2400,Math.max(480,Math.round(1920*S*dpr)));R.setSize(w,Math.round(w*9/16),false);starM.size=1.7*px();}
+
+/* ---------- 효과음 ---------- */
+const AU={ctx:null,on:true,m:null,nb:null};
+function actx(){try{if(!AU.ctx){AU.ctx=new (window.AudioContext||window.webkitAudioContext)();AU.m=AU.ctx.createGain();AU.m.gain.value=.5;AU.m.connect(AU.ctx.destination)}if(AU.ctx.state==='suspended')AU.ctx.resume()}catch(e){}}
+addEventListener('pointerdown',actx,true);addEventListener('keydown',actx,true);
+function tone(f0,f1,d,type,g,dl=0){const c=AU.ctx,t=c.currentTime+dl,o=c.createOscillator(),v=c.createGain();o.type=type;o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(Math.max(20,f1),t+d);v.gain.setValueAtTime(.0001,t);v.gain.exponentialRampToValueAtTime(g,t+.012);v.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(v);v.connect(AU.m);o.start(t);o.stop(t+d+.05)}
+function noise(d,g,f0,f1,q,dl=0){const c=AU.ctx;if(!AU.nb){AU.nb=c.createBuffer(1,c.sampleRate*2,c.sampleRate);const a=AU.nb.getChannelData(0);for(let i=0;i<a.length;i++)a[i]=Math.random()*2-1}
+  const t=c.currentTime+dl,sr=c.createBufferSource();sr.buffer=AU.nb;sr.loop=true;const f=c.createBiquadFilter();f.type='bandpass';f.Q.value=q;f.frequency.setValueAtTime(f0,t);f.frequency.exponentialRampToValueAtTime(f1,t+d);
+  const v=c.createGain();v.gain.setValueAtTime(.0001,t);v.gain.exponentialRampToValueAtTime(g,t+d*.35);v.gain.exponentialRampToValueAtTime(.0001,t+d);sr.connect(f);f.connect(v);v.connect(AU.m);sr.start(t);sr.stop(t+d+.05)}
+let lastTick=0;
+function sfx(n,p=1){if(!AU.on||!AU.ctx||AU.ctx.state!=='running')return;
+  try{
+  if(n==='type')noise(.05,.22,3800,3000,2);
+  else if(n==='select')tone(880,1320,.09,'triangle',.11);
+  else if(n==='pop')tone(520*p,170*p,.16,'sine',.22);
+  else if(n==='whoosh')noise(.75,.16,260,2400,.8);
+  else if(n==='warp'){noise(2.6,.34,90,3600,.5);tone(48,26,2.8,'sawtooth',.05);tone(220,880,2.2,'sine',.03,.4)}
+  else if(n==='tick'){const now=performance.now();if(now-lastTick<38)return;lastTick=now;tone(900*p,700*p,.06,'square',.035)}
+  else if(n==='shimmer')[1318,1568,1975,2637,3136].forEach((f,i)=>tone(f,f*1.002,.7,'sine',.045,i*.07));
+  else if(n==='boom')tone(110,36,.9,'sine',.35);
+  }catch(e){}}
+
+/* ---------- 텍스처 ---------- */
+function radial(stops){const c=document.createElement('canvas');c.width=c.height=256;const x=c.getContext('2d');const g=x.createRadialGradient(128,128,0,128,128,128);stops.forEach(([o,col])=>g.addColorStop(o,col));x.fillStyle=g;x.fillRect(0,0,256,256);return new T.CanvasTexture(c)}
+const dotTex=radial([[0,'rgba(255,255,255,1)'],[.25,'rgba(255,255,255,.6)'],[1,'rgba(255,255,255,0)']]);
+const fogTex=radial([[0,'rgba(255,255,255,.55)'],[.35,'rgba(255,255,255,.18)'],[1,'rgba(255,255,255,0)']]);
+
+/* ---------- 먼 별 ---------- */
+const SN=9000,sp=new Float32Array(SN*3),sc=new Float32Array(SN*3);
+for(let i=0;i<SN;i++){const u=Math.random()*2-1,a=Math.random()*Math.PI*2,r=700+Math.random()*1600,q=Math.sqrt(1-u*u);sp.set([Math.cos(a)*q*r,u*r,Math.sin(a)*q*r],i*3);
+  const k=Math.random();const c=k<.15?[1,.85,.6]:k<.4?[.7,.8,1]:[1,1,1];const b=.35+Math.random()*.65;sc.set([c[0]*b,c[1]*b,c[2]*b],i*3)}
+const sg=new T.BufferGeometry();sg.setAttribute('position',new T.BufferAttribute(sp,3));sg.setAttribute('color',new T.BufferAttribute(sc,3));
+const starM=new T.PointsMaterial({size:1.7,sizeAttenuation:false,vertexColors:true,map:dotTex,transparent:true,depthWrite:false,blending:T.AdditiveBlending});
+scene.add(new T.Points(sg,starM));
+
+/* ---------- 은하 ---------- */
+const GN=48000,gp=new Float32Array(GN*3),gc=new Float32Array(GN*3),gs=new Float32Array(GN),gr=new Float32Array(GN);
+const cIn=new T.Color('#fff3d6'),cMid=new T.Color('#f0b65a'),cOut=new T.Color('#4d6bff'),cPur=new T.Color('#a05cff'),cTeal=new T.Color('#36d6ff');
+for(let i=0;i<GN;i++){const rr=Math.pow(Math.random(),1.5)*64,br=(i%4)/4*Math.PI*2,spn=rr*.3;
+  const rnd=()=>Math.pow(Math.random(),3)*(Math.random()<.5?1:-1)*(.7+rr*.21);
+  gp[i*3]=Math.cos(br+spn)*rr+rnd();gp[i*3+1]=rnd()*.32*(rr<9?2.4:1);gp[i*3+2]=Math.sin(br+spn)*rr+rnd();
+  const k=rr/64,rv=Math.random();const col=cIn.clone().lerp(cMid,Math.min(1,k*3.2)).lerp(rv<.3?cPur:rv<.4?cTeal:cOut,Math.max(0,Math.min(1,k*1.5-.25)));
+  gc.set([col.r,col.g,col.b],i*3);gs[i]=(rr<6?3.6:1.3)+Math.random()*2.4;gr[i]=Math.random()}
+const gg=new T.BufferGeometry();gg.setAttribute('position',new T.BufferAttribute(gp,3));gg.setAttribute('aCol',new T.BufferAttribute(gc,3));gg.setAttribute('aSize',new T.BufferAttribute(gs,1));gg.setAttribute('aRand',new T.BufferAttribute(gr,1));
+const gm=new T.ShaderMaterial({transparent:true,depthWrite:false,blending:T.AdditiveBlending,
+  uniforms:{uT:{value:0},uSpin:{value:0},uPx:{value:1},uOp:{value:1}},
+  vertexShader:'attribute vec3 aCol;attribute float aSize,aRand;uniform float uT,uSpin,uPx,uOp;varying vec3 vC;varying float vA;'+
+  'void main(){vec3 p=position;float r=length(p.xz);float a=uSpin*(3.0/(1.0+r*.09));float c=cos(a),s=sin(a);p.xz=vec2(c*p.x-s*p.z,s*p.x+c*p.z);'+
+  'vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=clamp(aSize*uPx*(150./-mv.z),0.,48.);vC=aCol;vA=uOp*(.62+.38*sin(uT*1.6+aRand*40.));}',
+  fragmentShader:'varying vec3 vC;varying float vA;void main(){float d=length(gl_PointCoord-.5);float a=smoothstep(.5,.0,d);a*=a;gl_FragColor=vec4(vC*a*vA,1.);}'});
+const galaxy=new T.Points(gg,gm);galaxy.rotation.x=.16;galaxy.frustumCulled=false;scene.add(galaxy);
+const core=new T.Sprite(new T.SpriteMaterial({map:radial([[0,'rgba(255,244,220,1)'],[.12,'rgba(255,205,130,.7)'],[.4,'rgba(140,120,255,.16)'],[1,'rgba(0,0,0,0)']]),blending:T.AdditiveBlending,depthWrite:false,transparent:true}));
+core.scale.set(78,78,1);scene.add(core);
+const nebulae=[];[['#5a3cff',-60,10,-40,240,.16],['#2b6bff',70,-8,30,260,.14],['#c9a24b',10,4,0,120,.12],['#a03cff',-20,-30,90,220,.1],['#1fb6ff',110,30,-90,300,.08],['#ff6a8a',-140,-20,40,260,.05]].forEach(n=>{
+  const m=new T.SpriteMaterial({map:fogTex,color:new T.Color(n[0]),blending:T.AdditiveBlending,depthWrite:false,transparent:true,opacity:n[5]});const sp=new T.Sprite(m);sp.position.set(n[1],n[2],n[3]);sp.scale.set(n[4],n[4],1);sp.userData.op=n[5];scene.add(sp);nebulae.push(sp)});
+
+/* ---------- 워프 줄기 (카메라 기준) ---------- */
+const WN=1100,wpos=new Float32Array(WN*6),wu=new Float32Array(WN),wv=new Float32Array(WN),ww=new Float32Array(WN);
+for(let i=0;i<WN;i++){let a=Math.random()*Math.PI*2,r=.12+Math.pow(Math.random(),.6);wu[i]=Math.cos(a)*r;wv[i]=Math.sin(a)*r;ww[i]=Math.random()}
+const wg=new T.BufferGeometry();wg.setAttribute('position',new T.BufferAttribute(wpos,3));
+const wm=new T.LineBasicMaterial({color:0xd6e2ff,transparent:true,opacity:0,blending:T.AdditiveBlending,depthWrite:false});
+const warp=new T.LineSegments(wg,wm);warp.frustumCulled=false;cam.add(warp);
+let warpI=0,warpAxis='z';
+function updWarp(dt,speed){if(warpI<.01){wm.opacity=0;return}
+  wm.opacity=Math.min(1,warpI);
+  for(let i=0;i<WN;i++){ww[i]+=dt*speed*(.6+Math.abs(wu[i]));if(ww[i]>1){ww[i]-=1}
+    let x,y,z,x2,y2,z2;
+    if(warpAxis==='z'){x=wu[i]*70;y=wv[i]*40;z=-6-(1-ww[i])*420;x2=x;y2=y;z2=z-(14+60*warpI)}
+    else{x=wu[i]*46;z=-14-(wv[i]*.5+.5)*70;y=55-ww[i]*110;x2=x;z2=z;y2=y+(6+26*warpI)}
+    wpos.set([x,y,z,x2,y2,z2],i*6)}
+  wg.attributes.position.needsUpdate=true}
+
+/* ---------- 초상 (은하 중심에서 등장) ---------- */
+const loader=new T.TextureLoader();
+const ptex=loader.load('photo.jpg');
+const pm=new T.ShaderMaterial({transparent:true,depthTest:false,depthWrite:false,uniforms:{map:{value:ptex},uK:{value:0}},
+  vertexShader:'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+  fragmentShader:'uniform sampler2D map;uniform float uK;varying vec2 vUv;float h(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}'+
+  'void main(){vec2 c=vUv-.5;float r=length(c);vec3 col=texture2D(map,vec2(vUv.x,.31+vUv.y*.667)).rgb;'+
+  'float n=h(floor(vUv*70.));float e=uK*1.35-r*.7-n*.35;float rev=smoothstep(0.,.06,e);float edge=smoothstep(.12,0.,abs(e-.03))*step(.001,uK);'+
+  'float disc=smoothstep(.5,.488,r);float rim=smoothstep(.462,.478,r)*smoothstep(.5,.486,r);vec3 gold=vec3(1.,.8,.45);'+
+  'vec3 o=mix(col,gold,rim);o+=gold*edge*1.4;gl_FragColor=vec4(o,disc*max(rev,edge*.8));}'});
+const portrait=new T.Mesh(new T.PlaneGeometry(17,17),pm);portrait.renderOrder=20;portrait.position.set(0,1.5,0);scene.add(portrait);
+const ringM=new T.MeshBasicMaterial({color:0xe6cf96,transparent:true,opacity:0,blending:T.AdditiveBlending,depthWrite:false,depthTest:false,side:T.DoubleSide});
+const ring1=new T.Mesh(new T.RingGeometry(9.3,9.45,160),ringM),ring2=new T.Mesh(new T.RingGeometry(11.4,11.5,160,1,0,Math.PI*1.4),ringM.clone()),ring3=new T.Mesh(new T.RingGeometry(13.6,13.66,160,1,0,Math.PI*.7),ringM.clone());
+[ring1,ring2,ring3].forEach(r=>{r.renderOrder=19;portrait.add(r)});
+const halo=new T.Sprite(new T.SpriteMaterial({map:radial([[0,'rgba(255,230,180,.9)'],[.3,'rgba(201,162,75,.35)'],[.6,'rgba(80,110,255,.12)'],[1,'rgba(0,0,0,0)']]),blending:T.AdditiveBlending,depthWrite:false,depthTest:false,transparent:true,opacity:0}));
+halo.scale.set(52,52,1);halo.renderOrder=18;halo.position.copy(portrait.position);scene.add(halo);
+let pK=0,pTarget=0;
+
+/* ---------- 슬라이드 타워 ---------- */
+const TW={n:54,baseY:-66,step:1.18,R:4.7,slides:[],start:-1,land:[],landed:0,done:false,group:new T.Group()};
+scene.add(TW.group);
+{let t=.35;for(let i=0;i<TW.n;i++){TW.land.push(t);t+=Math.max(.042,.36*Math.pow(.9,i))}TW.total=t}
+const sgeo=new T.PlaneGeometry(3.7,2.08),egeo=new T.EdgesGeometry(sgeo);
+for(let i=0;i<TW.n;i++){const tex=loader.load('slides/t'+String(i+1).padStart(2,'0')+'.jpg');tex.minFilter=T.LinearFilter;tex.generateMipmaps=false;
+  const m=new T.Mesh(sgeo,new T.MeshBasicMaterial({map:tex,side:T.DoubleSide,transparent:true,opacity:0,depthWrite:true}));
+  const ed=new T.LineSegments(egeo,new T.LineBasicMaterial({color:0xe6cf96,transparent:true,opacity:0,blending:T.AdditiveBlending}));m.add(ed);
+  const a=i*.52,fp=new T.Vector3(Math.cos(a)*TW.R,TW.baseY+i*TW.step,Math.sin(a)*TW.R);
+  const dummy=new T.Object3D();dummy.position.copy(fp);dummy.lookAt(fp.x*3,fp.y,fp.z*3);dummy.rotateX(-.08);
+  const dir=new T.Vector3(Math.random()-.5,Math.random()*.6-.9,Math.random()-.5).normalize();
+  const sp=fp.clone().addScaledVector(dir,40+Math.random()*40);
+  const sq=new T.Quaternion().setFromEuler(new T.Euler(Math.random()*6,Math.random()*6,Math.random()*6));
+  m.position.copy(sp);m.visible=false;TW.group.add(m);
+  TW.slides.push({m,ed,fp,fq:dummy.quaternion.clone(),sp,sq,landed:false})}
+const towerGlow=new T.Sprite(new T.SpriteMaterial({map:fogTex,color:new T.Color('#5a7cff'),blending:T.AdditiveBlending,depthWrite:false,transparent:true,opacity:0}));
+towerGlow.scale.set(40,90,1);towerGlow.position.set(0,-34,0);scene.add(towerGlow);
+const tCount=document.getElementById('tCount');
+function towerAt(t){ // t: 시작 후 경과초
+  let landed=0;
+  for(let i=0;i<TW.n;i++){const S_=TW.slides[i],L=TW.land[i],k=Math.min(1,Math.max(0,(t-(L-.55))/.55));
+    if(k<=0){S_.m.visible=false;continue}
+    S_.m.visible=true;const e=1-Math.pow(1-k,3);
+    S_.m.position.lerpVectors(S_.sp,S_.fp,e);S_.m.quaternion.copy(S_.sq).slerp(S_.fq,e);
+    S_.m.material.opacity=Math.min(1,k*1.6);S_.ed.material.opacity=k>=1?.35+.5*Math.exp(-(t-L)*3):k*.6;
+    if(k>=1){landed++;if(!S_.landed){S_.landed=true;sfx('tick',1+i*.02)}}else S_.landed=false}
+  if(landed!==TW.landed){TW.landed=landed;if(tCount)tCount.textContent=landed}
+  return landed}
+function towerFinish(){TW.start=performance.now()/1000-TW.total-2;TW.slides.forEach(s=>s.landed=true);towerAt(TW.total+2)}
+
+/* ---------- 카메라 ---------- */
+const camPos=new T.Vector3(0,140,640),camLook=new T.Vector3(),tPos=new T.Vector3(),tLook=new T.Vector3();
+cam.position.copy(camPos);
+const ORBIT={before:[.25,150,55,46,.75],numbers:[1.35,125,-22,30,.45],language:[2.3,190,78,130,.4],now:[3.15,112,26,38,.55],films:[3.95,150,-34,40,.65],ladder:[4.85,132,42,46,.6],process:[5.6,190,-10,130,.4],credentials:[6.35,96,30,40,.7],contact:[7.1,78,12,30,.95]};
+let mode='idle',sceneStart=0,gOp=1,gOpT=1,spin=0,spinRate=.03,autoFired=false,curId='office',curBeat=0;
+function orbitTarget(id,t){const o=ORBIT[id];const th=o[0]+t*.012;tPos.set(Math.sin(th)*o[1],o[2],Math.cos(th)*o[1]);
+  const dir=tPos.clone().negate().normalize(),right=new T.Vector3().crossVectors(dir,UP).normalize();tLook.copy(right).multiplyScalar(-o[3]);gOpT=o[4]}
+
+function setScene(s,b,dir){curId=s.id;curBeat=b;const now=performance.now()/1000;
+  stage.classList.toggle('spaceon',s.id!=='office');
+  if(s.id==='galaxy'){
+    if(b===0){mode='warp';sceneStart=now;autoFired=false;camPos.set(0,150,660);pTarget=0;pK=0;gOpT=1;sfx('boom')}
+    else{mode='portrait';sceneStart=now;pTarget=1;sfx('shimmer')}
+  }else if(s.id==='tower'){
+    if(b===0){mode='tower';if(dir<0||TW.start<0||TW.done){TW.start=now;TW.done=false;TW.slides.forEach(x=>{x.landed=false});TW.landed=-1}autoFired=false;sceneStart=now}
+    else{mode='towerWide';towerFinish();TW.done=true;sceneStart=now}
+    pTarget=0;
+  }else{mode=s.id==='office'?'idle':'orbit';pTarget=0}
+}
+
+/* ---------- 매 프레임 ---------- */
+let last=performance.now()/1000,elapsed=0;
+function frame(){requestAnimationFrame(frame);
+  const now=performance.now()/1000,dt=Math.min(.05,now-last);last=now;elapsed+=dt;
+  const officeOnly=curId==='office'&&!stage.classList.contains('spaceon');
+  if(officeOnly&&!document.querySelector('#s-office').getAnimations().length)return;
+  const t=now-sceneStart;let wspeed=1.2;warpAxis='z';let warpT=0;
+  if(mode==='warp'){const k=Math.min(1,t/4.2),e=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;
+    camPos.set(0,150,660).lerp(new T.Vector3(-6,26,92),e);cam.position.copy(camPos);camLook.set(0,0,0);cam.lookAt(camLook);
+    warpT=Math.sin(Math.PI*Math.min(1,t/4.2))*1.1;wspeed=2.4;spinRate=.03+.5*(1-e);gOpT=1;
+    if(t>5&&!autoFired&&curId==='galaxy'&&curBeat===0){autoFired=true;go(cur,1,1)}}
+  else{
+    if(mode==='portrait'){tPos.set(-4,9,44);tLook.set(-13.5,1.5,0);gOpT=1;spinRate=.04}
+    else if(mode==='tower'){const tt=t;const L=towerAt(tt);const top=TW.baseY+Math.max(3,L)*TW.step;const ang=tt*.38+.6;
+      tPos.set(Math.cos(ang)*17,top+3.5,Math.sin(ang)*17);tLook.set(-6,top-2.5,0);
+      const idx=Math.min(TW.n-1,L);const rate=1/Math.max(.042,.36*Math.pow(.9,idx));warpAxis='y';warpT=Math.min(1,(rate-3)/18);wspeed=1.8+rate*.08;gOpT=.9;spinRate=.03;
+      if(tt>TW.total+.6&&!autoFired&&curId==='tower'&&curBeat===0){autoFired=true;TW.done=true;go(cur,1,1)}}
+    else if(mode==='towerWide'){tPos.set(62,-46,70);tLook.set(-18,-26,0);gOpT=1;spinRate=.03}
+    else if(mode==='orbit'){orbitTarget(curId,elapsed);spinRate=.03}
+    const k=1-Math.exp(-dt*(mode==='tower'?4:1.5));camPos.lerp(tPos,k);camLook.lerp(tLook,k);cam.position.copy(camPos);cam.lookAt(camLook)}
+  warpI+=(warpT-warpI)*Math.min(1,dt*5);updWarp(dt,wspeed);
+  spin+=dt*spinRate;gOp+=(gOpT-gOp)*Math.min(1,dt*2);
+  gm.uniforms.uT.value=elapsed;gm.uniforms.uSpin.value=spin;gm.uniforms.uPx.value=px();gm.uniforms.uOp.value=gOp;
+  core.material.opacity=gOp;nebulae.forEach((n,i)=>{n.material.opacity=n.userData.op*gOp*(1+.25*Math.sin(elapsed*.3+i))});
+  pK+=(pTarget-pK)*Math.min(1,dt*(pTarget>pK?1.1:4));pm.uniforms.uK.value=pK;portrait.visible=pK>.003;
+  portrait.quaternion.copy(cam.quaternion);ring1.material.opacity=pK*.9;ring2.material.opacity=pK*.6;ring3.material.opacity=pK*.45;
+  ring2.rotation.z=elapsed*.35;ring3.rotation.z=-elapsed*.22;ring1.scale.setScalar(1+.02*Math.sin(elapsed*2));
+  halo.material.opacity=pK*.85;
+  towerGlow.material.opacity=(mode==='tower'||mode==='towerWide')?.25:Math.max(0,towerGlow.material.opacity-dt*.3);
+  if(TW.done&&mode!=='tower')towerAt(TW.total+2);
+  R.render(scene,cam)}
+
+size();addEventListener('resize',size);
+document.getElementById('bSnd').addEventListener('click',e=>{e.stopPropagation();AU.on=!AU.on;e.currentTarget.textContent=AU.on?'♪':'✕';e.currentTarget.setAttribute('aria-label',AU.on?'효과음 끄기':'효과음 켜기')});
+addEventListener('keydown',e=>{if((e.key==='m'||e.key==='M')&&!e.metaKey&&!e.ctrlKey){const b=document.getElementById('bSnd');b.click()}});
+const lv=document.getElementById('lv'),lvSnd=document.getElementById('lvSnd');
+if(lv&&lvSnd)lvSnd.addEventListener('click',e=>{e.stopPropagation();lv.muted=!lv.muted;lvSnd.textContent=lv.muted?'소리 켜기':'소리 끄기';if(!lv.muted){const p=lv.play();if(p)p.catch(()=>{})}});
+Object.assign(W3,{on:true,setScene,sfx});
+setScene(scenes[cur],beat,1);
+requestAnimationFrame(frame);
+})();
+</script>
